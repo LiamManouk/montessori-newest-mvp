@@ -4723,6 +4723,42 @@ function incrementDailyCount() {
 }
 
 // ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+function renderBotIncremental(obj, d) {
+  var bub = d.querySelector('.bub');
+  if (!bub) return;
+  
+  if (obj.clarify) {
+    bub.innerHTML = esc(obj.clarify).replace(/\n/g, '<br>');
+    scrollChat();
+    return;
+  }
+  
+  var empathyHtml = obj.empathy ? '<span class="empathy">' + esc(obj.empathy) + '</span>' : '';
+  
+  var bioHtml = '';
+  if (obj.bio) {
+    bioHtml = '<div class="sbox biobox"><span class="slbl">Biologischer Hintergrund</span><p>' + esc(obj.bio) + '</p></div>';
+  }
+  
+  var montessoriHtml = '';
+  if (obj.montessori) {
+    montessoriHtml = '<div class="sbox montbox"><span class="slbl">Montessori-Prinzip</span><p>' + esc(obj.montessori) + '</p></div>';
+  }
+  
+  var dosHtml = '';
+  if ((obj.dos && obj.dos.length) || (obj.donts && obj.donts.length)) {
+    var dosLi = (obj.dos || []).map(function(d) { return '<li>' + esc(d) + '</li>'; }).join('');
+    var dontsLi = (obj.donts || []).map(function(d) { return '<li>' + esc(d) + '</li>'; }).join('');
+    dosHtml = '<span class="albl">Konkrete Empfehlungen</span><ul class="dos">' + dosLi + '</ul><ul class="donts">' + dontsLi + '</ul>';
+  }
+  
+  var srcHtml = obj.sources ? '<div class="srcnote">' + esc(obj.sources) + '</div>' : '';
+  
+  bub.innerHTML = empathyHtml + bioHtml + montessoriHtml + dosHtml + srcHtml;
+  scrollChat();
+}
+
 async function chatGo() {
   var inp = document.getElementById('inp'), text = inp.value.trim();
   if (!text || chatBusy) return;
@@ -4767,7 +4803,13 @@ async function chatGo() {
       return;
     }
 
-    // Stream akkumulieren — renderBot() braucht das komplette JSON
+    var ti3 = document.getElementById('tind'); if (ti3) ti3.remove();
+    var m = document.getElementById('msgs'), d = document.createElement('div');
+    d.className = 'msg bot';
+    d.innerHTML = '<div class="av"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 20 L12 10" stroke="#4A6350" stroke-width="1.5" stroke-linecap="round"/><path d="M12 10 C12 5 7 4 6 7 C8 7 10 8.5 12 10Z" fill="#7A8D7B"/><path d="M12 15 C12 10 17 8 18 11 C16 11 14 13 12 15Z" fill="#B5C4B6"/></svg></div><div class="bub"></div>';
+    m.appendChild(d);
+    scrollChat();
+
     var reader = r.body.getReader();
     var decoder = new TextDecoder();
     var buf = '';
@@ -4788,37 +4830,50 @@ async function chatGo() {
           var evt = JSON.parse(jsonStr);
           if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
             raw += evt.delta.text;
+            try {
+              var obj = parseJSON(raw);
+              renderBotIncremental(obj, d);
+            } catch(pe) {}
           }
         } catch(pe) {}
       }
     }
 
-    var ti3 = document.getElementById('tind'); if (ti3) ti3.remove();
-
-    if (!raw) { renderFB('Verbindungsfehler. Bitte erneut versuchen.'); return; }
+    if (!raw) {
+      d.remove();
+      renderFB('Verbindungsfehler. Bitte erneut versuchen.');
+      return;
+    }
 
     incrementDailyCount();
     chatHist.push({role:'assistant', content: raw});
+    lastAnswer = raw;
 
     try {
       var obj = parseJSON(raw);
-      obj.empathy = obj.empathy || '';
-      obj.bio = obj.bio || '';
-      obj.montessori = obj.montessori || '';
-      obj.dos = obj.dos || [];
-      obj.donts = obj.donts || [];
-      obj.sources = obj.sources || '';
-      if (obj.clarify) {
-        renderFB(obj.clarify);
-      } else if (obj.empathy || obj.bio || obj.dos.length) {
-        lastAnswer = raw;
-        renderBot(obj);
-        addFeedbackButtons(raw);
-      } else {
-        renderFB('Ich habe dich leider nicht ganz verstanden. Kannst du mir beschreiben was dein Kind gerade macht oder was euch beschäftigt?');
+      renderBotIncremental(obj, d);
+      
+      var topic = obj.topic || '';
+      if (topic && TOPIC_LESSONS[topic]) {
+        var lessonId = TOPIC_LESSONS[topic][0];
+        var lesson = LESSONS[lessonId];
+        if (lesson) {
+          var bridge = document.createElement('div');
+          bridge.className = 'learn-bridge-wrap';
+          bridge.innerHTML = '<div class="learn-bridge">'
+            + '<div class="learn-bridge-icon">&#128216;</div>'
+            + '<div class="learn-bridge-body"><div class="learn-bridge-lbl">Lektion dazu</div>'
+            + '<div class="learn-bridge-title">' + esc(lesson.title) + '</div></div>'
+            + '<div class="learn-bridge-arrow">&#8250;</div></div>';
+          bridge.querySelector('.learn-bridge').addEventListener('click', (function(id) {
+            return function() { goToLesson(id); };
+          })(lessonId));
+          m.appendChild(bridge);
+        }
       }
+      addFeedbackButtons(raw);
     } catch(e2) {
-      renderFB('Ich habe dich leider nicht ganz verstanden. Kannst du deine Situation etwas genauer beschreiben?');
+      d.querySelector('.bub').textContent = raw;
     }
 
   } catch(err) {
