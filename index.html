@@ -3436,97 +3436,33 @@ async function fcSubmitCurrent() {
 
   var userMsg = 'SITUATION: ' + fc.situation + '\nREAKTION DER ELTERN: ' + val + '\n\nBitte analysiere diese Reaktion konkret.';
   try {
-    var r = await fetch('/api/montessori/feedback', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system: FEEDBACK_SYS,
-        messages: [{ role: 'user', content: userMsg }],
-        max_tokens: 500
-      })
+    var _u1 = location.hostname.includes('github.io') ? 'https://montessori-proxy.liam-broemer.workers.dev' : 'https://api.anthropic.com/v1/messages';
+    var _h1 = location.hostname.includes('github.io') ? {'Content-Type':'application/json','anthropic-version':'2023-06-01','x-device-id':getDeviceId()} : {'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-beta':'prompt-caching-2024-07-31','anthropic-dangerous-direct-browser-access':'true'};
+    var r = await fetch(_u1, {
+      method:'POST',
+      headers:_h1,
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:500, system:FEEDBACK_SYS, messages:[{role:'user',content:userMsg}] })
     });
-
-    if (!r.ok || !r.body) {
-      throw new Error('Verbindungsfehler oder ungültige Antwort.');
-    }
-
+    var data = await r.json();
     if (load) load.classList.remove('show');
-    
-    // We flip the card to the back immediately so we can stream into it!
-    var fb = { quality: 'teilweise', feedback: '', better_way: [], principle: '', source: '' };
+    var raw = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : '';
+    var fb = { quality:'teilweise', feedback:'Danke für deine Reflexion.', principle:'', source:'' };
+    try {
+      var s = raw.indexOf('{'), e = raw.lastIndexOf('}');
+      if (s !== -1 && e !== -1) {
+        var p = JSON.parse(raw.slice(s,e+1));
+        fb.quality = p.quality || 'teilweise';
+        fb.feedback = p.feedback || '';
+        fb.better_way = Array.isArray(p.better_way) ? p.better_way : (p.better_way ? [p.better_way] : []);
+        fb.principle = p.principle || '';
+        fb.source = p.sources || p.source || '';
+      }
+    } catch(pe) { fb.feedback = raw; }
     fcDone[fcCurrent] = fb;
     logActivity('card', FLASHCARDS[fcCurrent].title);
     saveLearningState();
     fcFlipped = true;
     renderFcCard();
-
-    // Now, get elements from the back of the card to update them dynamically
-    var fbScroll = document.querySelector('.fc-back-scroll');
-    var qBadge = document.querySelector('.fc-quality');
-
-    var reader = r.body.getReader();
-    var decoder = new TextDecoder();
-    var buf = '';
-    var raw = '';
-
-    while (true) {
-      var chunk = await reader.read();
-      if (chunk.done) break;
-      buf += decoder.decode(chunk.value, {stream: true});
-      var lines = buf.split('\n');
-      buf = lines.pop();
-      for (var i = 0; i < lines.length; i++) {
-        var line = lines[i].trim();
-        if (!line.startsWith('data: ')) continue;
-        var jsonStr = line.slice(6);
-        if (jsonStr === '[DONE]') continue;
-        try {
-          var evt = JSON.parse(jsonStr);
-          if (evt.text) {
-            raw += evt.text;
-            try {
-              var p = parseJSON(raw);
-              fb.quality = p.quality || 'teilweise';
-              fb.feedback = p.feedback || '';
-              fb.better_way = Array.isArray(p.better_way) ? p.better_way : (p.better_way ? [p.better_way] : []);
-              fb.principle = p.principle || '';
-              fb.source = p.sources || p.source || '';
-
-              // Update DOM elements in place
-              if (fbScroll) {
-                fbScroll.innerHTML = buildFcBackContent(fb);
-              }
-              if (qBadge) {
-                qBadge.textContent = fcQualityLabel(fb.quality);
-                qBadge.className = 'fc-quality ' + fb.quality;
-              }
-            } catch(pe) {}
-          }
-        } catch(pe) {}
-      }
-    }
-
-    // Final clean up and save state
-    try {
-      var p = parseJSON(raw);
-      fb.quality = p.quality || 'teilweise';
-      fb.feedback = p.feedback || '';
-      fb.better_way = Array.isArray(p.better_way) ? p.better_way : (p.better_way ? [p.better_way] : []);
-      fb.principle = p.principle || '';
-      fb.source = p.sources || p.source || '';
-    } catch(pe) {
-      if (raw) fb.feedback = raw;
-    }
-    fcDone[fcCurrent] = fb;
-    saveLearningState();
-    if (fbScroll) {
-      fbScroll.innerHTML = buildFcBackContent(fb);
-    }
-    if (qBadge) {
-      qBadge.textContent = fcQualityLabel(fb.quality);
-      qBadge.className = 'fc-quality ' + fb.quality;
-    }
-
   } catch(err) {
     if (load) load.classList.remove('show');
     if (btn) btn.style.display = 'flex';
@@ -3736,103 +3672,61 @@ async function submitPractice() {
     'REAKTION DER ELTERN: ' + val + '\n\n' +
     'Bitte analysiere diese Reaktion konkret und gib Feedback.';
 
-  // Show the feedback container immediately (with loading status)
-  var head = document.getElementById('pr-fb-head');
-  var body = document.getElementById('pr-fb-body');
-  var fb = document.getElementById('pr-feedback');
-  var mont = document.getElementById('pr-mont');
-
-  head.textContent = 'Feedback wird geladen...';
-  head.className = 'pr-fb-head neu';
-  body.innerHTML = '';
-  fb.classList.add('show');
-  if (mont) mont.style.display = 'block';
-
   try {
-    var r = await fetch('/api/montessori/feedback', {
+    var _u2 = location.hostname.includes('github.io') ? 'https://montessori-proxy.liam-broemer.workers.dev' : 'https://api.anthropic.com/v1/messages';
+    var r = await fetch(_u2, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: location.hostname.includes('github.io') ? {'Content-Type':'application/json','anthropic-version':'2023-06-01','x-device-id':getDeviceId()} : {'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
         system: FEEDBACK_SYS,
-        messages: [{ role: 'user', content: userMsg }],
-        max_tokens: 400
+        messages: [{ role: 'user', content: userMsg }]
       })
     });
-
-    if (!r.ok || !r.body) {
-      throw new Error('Verbindungsfehler oder ungültige Antwort.');
-    }
-
+    var data = await r.json();
     if (loading) loading.classList.remove('show');
 
-    var reader = r.body.getReader();
-    var decoder = new TextDecoder();
-    var buf = '';
-    var raw = '';
-
-    while (true) {
-      var chunk = await reader.read();
-      if (chunk.done) break;
-      buf += decoder.decode(chunk.value, {stream: true});
-      var lines = buf.split('\n');
-      buf = lines.pop();
-      for (var i = 0; i < lines.length; i++) {
-        var line = lines[i].trim();
-        if (!line.startsWith('data: ')) continue;
-        var jsonStr = line.slice(6);
-        if (jsonStr === '[DONE]') continue;
-        try {
-          var evt = JSON.parse(jsonStr);
-          if (evt.text) {
-            raw += evt.text;
-            try {
-              var obj = parseJSON(raw);
-              if (obj && obj.feedback) {
-                var qualityClass = obj.quality === 'gut' ? 'pos' : (obj.quality === 'teilweise' ? 'neu' : 'neg');
-                head.textContent = obj.heading || 'Feedback';
-                head.className = 'pr-fb-head ' + qualityClass;
-                
-                var html = (obj.feedback || '').replace(/\n/g, '<br>');
-                if (obj.principle) {
-                  html += '<div style="margin-top:10px;padding:8px 12px;background:var(--g6);border:1px solid var(--g4);border-radius:8px;font-size:12px;color:var(--g1);line-height:1.6;font-style:italic">' + esc(obj.principle) + '</div>';
-                }
-                body.innerHTML = html;
-              }
-            } catch(pe) {}
-          }
-        } catch(pe) {}
-      }
-    }
-
-    // Final pass
+    var raw = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : '';
+    var obj = null;
     try {
-      var obj = parseJSON(raw);
-      if (obj && obj.feedback) {
-        var qualityClass = obj.quality === 'gut' ? 'pos' : (obj.quality === 'teilweise' ? 'neu' : 'neg');
-        head.textContent = obj.heading || 'Feedback';
-        head.className = 'pr-fb-head ' + qualityClass;
-        
-        var html = (obj.feedback || '').replace(/\n/g, '<br>');
-        if (obj.principle) {
-          html += '<div style="margin-top:10px;padding:8px 12px;background:var(--g6);border:1px solid var(--g4);border-radius:8px;font-size:12px;color:var(--g1);line-height:1.6;font-style:italic">' + esc(obj.principle) + '</div>';
-        }
-        body.innerHTML = html;
-      } else {
-        head.textContent = 'Reflexion';
-        head.className = 'pr-fb-head neu';
-        body.textContent = raw || 'Danke fuer deine Reaktion. Vergleiche sie mit dem Montessori-Prinzip dieser Einheit.';
+      var s = raw.indexOf('{'), e = raw.lastIndexOf('}');
+      if (s !== -1 && e !== -1) obj = JSON.parse(raw.slice(s, e + 1));
+    } catch(pe) {}
+
+    var head = document.getElementById('pr-fb-head');
+    var body = document.getElementById('pr-fb-body');
+    var fb = document.getElementById('pr-feedback');
+    var mont = document.getElementById('pr-mont');
+
+    if (obj && obj.feedback) {
+      var qualityClass = obj.quality === 'gut' ? 'pos' : (obj.quality === 'teilweise' ? 'neu' : 'neg');
+      head.textContent = obj.heading || 'Feedback';
+      head.className = 'pr-fb-head ' + qualityClass;
+      body.innerHTML = obj.feedback.replace(/\n/g, '<br>');
+      if (obj.principle) {
+        var pEl = document.createElement('div');
+        pEl.style.cssText = 'margin-top:10px;padding:8px 12px;background:var(--g6);border:1px solid var(--g4);border-radius:8px;font-size:12px;color:var(--g1);line-height:1.6;font-style:italic';
+        pEl.textContent = obj.principle;
+        body.appendChild(pEl);
       }
-    } catch(e2) {
+    } else {
       head.textContent = 'Reflexion';
       head.className = 'pr-fb-head neu';
-      body.textContent = raw;
+      body.textContent = raw || 'Danke fuer deine Reaktion. Vergleiche sie mit dem Montessori-Prinzip dieser Einheit.';
     }
 
+    fb.classList.add('show');
+    if (mont) mont.style.display = 'block';
   } catch(err) {
     if (loading) loading.classList.remove('show');
-    head.textContent = 'Verbindungsfehler';
-    head.className = 'pr-fb-head neu';
-    body.textContent = 'Das Feedback konnte nicht geladen werden (' + err.message + '). Du kannst trotzdem weitermachen.';
+    var head2 = document.getElementById('pr-fb-head');
+    var body2 = document.getElementById('pr-fb-body');
+    var fb2 = document.getElementById('pr-feedback');
+    head2.textContent = 'Verbindungsfehler';
+    head2.className = 'pr-fb-head neu';
+    body2.textContent = 'Das Feedback konnte nicht geladen werden (' + err.message + '). Du kannst trotzdem weitermachen.';
+    fb2.classList.add('show');
   }
 
   practiceAnswered = true;
@@ -4612,42 +4506,6 @@ function incrementDailyCount() {
 }
 
 // ═══════════════════════════════════════════════════════
-// ═══════════════════════════════════════════════════════
-function renderBotIncremental(obj, d) {
-  var bub = d.querySelector('.bub');
-  if (!bub) return;
-  
-  if (obj.clarify) {
-    bub.innerHTML = esc(obj.clarify).replace(/\n/g, '<br>');
-    scrollChat();
-    return;
-  }
-  
-  var empathyHtml = obj.empathy ? '<span class="empathy">' + esc(obj.empathy) + '</span>' : '';
-  
-  var bioHtml = '';
-  if (obj.bio) {
-    bioHtml = '<div class="sbox biobox"><span class="slbl">Biologischer Hintergrund</span><p>' + esc(obj.bio) + '</p></div>';
-  }
-  
-  var montessoriHtml = '';
-  if (obj.montessori) {
-    montessoriHtml = '<div class="sbox montbox"><span class="slbl">Montessori-Prinzip</span><p>' + esc(obj.montessori) + '</p></div>';
-  }
-  
-  var dosHtml = '';
-  if ((obj.dos && obj.dos.length) || (obj.donts && obj.donts.length)) {
-    var dosLi = (obj.dos || []).map(function(d) { return '<li>' + esc(d) + '</li>'; }).join('');
-    var dontsLi = (obj.donts || []).map(function(d) { return '<li>' + esc(d) + '</li>'; }).join('');
-    dosHtml = '<span class="albl">Konkrete Empfehlungen</span><ul class="dos">' + dosLi + '</ul><ul class="donts">' + dontsLi + '</ul>';
-  }
-  
-  var srcHtml = obj.sources ? '<div class="srcnote">' + esc(obj.sources) + '</div>' : '';
-  
-  bub.innerHTML = empathyHtml + bioHtml + montessoriHtml + dosHtml + srcHtml;
-  scrollChat();
-}
-
 async function chatGo() {
   var inp = document.getElementById('inp'), text = inp.value.trim();
   if (!text || chatBusy) return;
@@ -4662,13 +4520,18 @@ async function chatGo() {
   if (chatHist.length > 10) chatHist = chatHist.slice(chatHist.length - 10);
   showTyping();
   try {
-    var r = await fetch('/api/montessori/chat', {
+    var _apiUrl2 = location.hostname.includes('github.io') ? 'https://montessori-proxy.liam-broemer.workers.dev' : 'https://api.anthropic.com/v1/messages';
+    var _headers2 = location.hostname.includes('github.io') ? {'Content-Type':'application/json','anthropic-version':'2023-06-01','x-device-id':getDeviceId()} : {'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'};
+
+    var r = await fetch(_apiUrl2, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: _headers2,
       body: JSON.stringify({
-        system: SYS,
-        messages: chatHist.slice(-4),
-        max_tokens: 900
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 900,
+        stream: true,
+        system: [{type:'text', text:SYS, cache_control:{type:'ephemeral'}}],
+        messages: chatHist.slice(-4)
       })
     });
 
@@ -4687,13 +4550,7 @@ async function chatGo() {
       return;
     }
 
-    var ti3 = document.getElementById('tind'); if (ti3) ti3.remove();
-    var m = document.getElementById('msgs'), d = document.createElement('div');
-    d.className = 'msg bot';
-    d.innerHTML = '<div class="av"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 20 L12 10" stroke="#4A6350" stroke-width="1.5" stroke-linecap="round"/><path d="M12 10 C12 5 7 4 6 7 C8 7 10 8.5 12 10Z" fill="#7A8D7B"/><path d="M12 15 C12 10 17 8 18 11 C16 11 14 13 12 15Z" fill="#B5C4B6"/></svg></div><div class="bub"></div>';
-    m.appendChild(d);
-    scrollChat();
-
+    // Stream akkumulieren — renderBot() braucht das komplette JSON
     var reader = r.body.getReader();
     var decoder = new TextDecoder();
     var buf = '';
@@ -4712,52 +4569,39 @@ async function chatGo() {
         if (jsonStr === '[DONE]') continue;
         try {
           var evt = JSON.parse(jsonStr);
-          if (evt.text) {
-            raw += evt.text;
-            try {
-              var obj = parseJSON(raw);
-              renderBotIncremental(obj, d);
-            } catch(pe) {}
+          if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
+            raw += evt.delta.text;
           }
         } catch(pe) {}
       }
     }
 
-    if (!raw) {
-      d.remove();
-      renderFB('Verbindungsfehler. Bitte erneut versuchen.');
-      return;
-    }
+    var ti3 = document.getElementById('tind'); if (ti3) ti3.remove();
+
+    if (!raw) { renderFB('Verbindungsfehler. Bitte erneut versuchen.'); return; }
 
     incrementDailyCount();
     chatHist.push({role:'assistant', content: raw});
-    lastAnswer = raw;
 
     try {
       var obj = parseJSON(raw);
-      renderBotIncremental(obj, d);
-      
-      var topic = obj.topic || '';
-      if (topic && TOPIC_LESSONS[topic]) {
-        var lessonId = TOPIC_LESSONS[topic][0];
-        var lesson = LESSONS[lessonId];
-        if (lesson) {
-          var bridge = document.createElement('div');
-          bridge.className = 'learn-bridge-wrap';
-          bridge.innerHTML = '<div class="learn-bridge">'
-            + '<div class="learn-bridge-icon">&#128216;</div>'
-            + '<div class="learn-bridge-body"><div class="learn-bridge-lbl">Lektion dazu</div>'
-            + '<div class="learn-bridge-title">' + esc(lesson.title) + '</div></div>'
-            + '<div class="learn-bridge-arrow">&#8250;</div></div>';
-          bridge.querySelector('.learn-bridge').addEventListener('click', (function(id) {
-            return function() { goToLesson(id); };
-          })(lessonId));
-          m.appendChild(bridge);
-        }
+      obj.empathy = obj.empathy || '';
+      obj.bio = obj.bio || '';
+      obj.montessori = obj.montessori || '';
+      obj.dos = obj.dos || [];
+      obj.donts = obj.donts || [];
+      obj.sources = obj.sources || '';
+      if (obj.clarify) {
+        renderFB(obj.clarify);
+      } else if (obj.empathy || obj.bio || obj.dos.length) {
+        lastAnswer = raw;
+        renderBot(obj);
+        addFeedbackButtons(raw);
+      } else {
+        renderFB('Ich habe dich leider nicht ganz verstanden. Kannst du mir beschreiben was dein Kind gerade macht oder was euch beschäftigt?');
       }
-      addFeedbackButtons(raw);
     } catch(e2) {
-      d.querySelector('.bub').textContent = raw;
+      renderFB('Ich habe dich leider nicht ganz verstanden. Kannst du deine Situation etwas genauer beschreiben?');
     }
 
   } catch(err) {
