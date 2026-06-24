@@ -4810,6 +4810,8 @@ async function chatGo() {
     m.appendChild(d);
     scrollChat();
 
+    await new Promise(function(r){setTimeout(r,1000)});
+
     var reader = r.body.getReader();
     var decoder = new TextDecoder();
     var buf = '';
