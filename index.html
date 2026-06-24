@@ -4890,25 +4890,7 @@ async function chatGo() {
 var kgProfile = {};
 var kgFiles = [];
 
-var DEMO_KG_PROFILE = {
-  name: 'Kita Waldwichtel',
-  approach: 'montessori',
-  philosophy: 'LEITBILD & PÄDAGOGISCHE KONZEPTION — Kita Waldwichtel, München-Schwabing\n\nKERNÜBERZEUGUNGEN: Jedes Kind trägt einen inneren Bauplan seiner Entwicklung in sich. Konzentration ist heilig — ein Kind das arbeitet darf nicht unterbrochen werden. Freiheit und Verantwortung sind untrennbar. Fehler sind Lernwege, keine Misserfolge — das Material gibt dem Kind selbst Rückmeldung, wir loben nicht.\n\nTAGESRHYTHMUS: 9:00–11:30 Uhr ist ungestörte Arbeitszeit — KEINE Unterbrechungen. Verspätetes Bringen nach 9:15 Uhr unterbricht die Konzentration aller Kinder. Frühes Abholen vor 11:30 Uhr bitte vermeiden. Mittagessen mit echtem Geschirr, Kinder helfen beim Vorbereiten.\n\nHALTUNG BEI SCHWIERIGEN SITUATIONEN: Konflikte — wir greifen erst ein wenn Sicherheit gefährdet ist, Kinder lösen selbst im Beisein einer Erzieherin. Wutanfälle — auf Augenhöhe, wenig sprechen, Gefühl benennen: "Du bist sehr wütend." Stille-Ecke mit Kissen und Knetkissen, niemals Timeout als Strafe. Grenzen — nie "Nein" ohne Alternative. Statt "Nicht hauen" → "Hier ist der Hauklotz." Autonomiephase — wir feiern "Ich alleine!" auch wenn es länger dauert, Eltern brauchen morgens 20 Minuten extra.\n\nZUSAMMENARBEIT MIT ELTERN: Übergabe morgens kurz und warm, kein Drama bei Tränen (hören nach 3 Min auf, wir schicken Foto). Kein Lob zuhause ("Super!", "Toll!") — stattdessen beschreiben: "Ich sehe du hast alle Perlen aufgereiht." Keine Montessori-Materialien ohne Rücksprache kaufen. Täglich 3 Minuten beobachten ohne einzugreifen. Zuhause dieselbe Sprache wie bei uns — Konsistenz ist entscheidend.\n\nBESONDERHEITEN: Kein Plastikspielzeug (nur Holz, Stoff, Metall, Glas). Kein Wettbewerb, keine Auszeichnungen. Wöchentlicher Waldtag donnerstags bei jedem Wetter. 6 von 9 Erzieher:innen mit AMI-Montessori-Diplom.'
-};
 
-function loadDemoKita() {
-  kgProfile = DEMO_KG_PROFILE;
-  // Demo läuft lokal — kein JSONBin nötig
-  var cd = document.getElementById('kg-code-display');
-  var cv = document.getElementById('kg-code-val');
-  cd.style.display = 'block';
-  cv.textContent = 'DEMO';
-  cv.style.fontSize = '22px';
-  cv.style.letterSpacing = '4px';
-  updateKgPill(); updateKgBadge();
-  addSysMsg('Demo-Profil geladen: Kita Waldwichtel. Der Chatbot antwortet jetzt im Kontext dieser Einrichtung — ohne JSONBin-Verbindung.');
-  closeAllPanels();
-}
 
 function kgTab(tab) {
   document.getElementById('kgt-parent').classList.toggle('active', tab === 'parent');
