@@ -3658,7 +3658,7 @@ async function fcSubmitCurrent() {
     var r = await fetch(_u1, {
       method:'POST',
       headers:_h1,
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:500, system:FEEDBACK_SYS, messages:[{role:'user',content:userMsg}] })
+      body: JSON.stringify({ model:'claude-haiku-4-5-20251001', max_tokens:500, system:FEEDBACK_SYS, messages:[{role:'user',content:userMsg}] })
     });
     var data = await r.json();
     if (load) load.classList.remove('show');
@@ -3895,7 +3895,7 @@ async function submitPractice() {
       method: 'POST',
       headers: location.hostname.includes('github.io') ? {'Content-Type':'application/json','anthropic-version':'2023-06-01','x-device-id':getDeviceId()} : {'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 400,
         system: FEEDBACK_SYS,
         messages: [{ role: 'user', content: userMsg }]
