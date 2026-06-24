@@ -3890,7 +3890,7 @@ async function submitPractice() {
       method: 'POST',
       headers: location.hostname.includes('github.io') ? {'Content-Type':'application/json','anthropic-version':'2023-06-01','x-device-id':getDeviceId()} : {'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-4-6',
         max_tokens: 400,
         system: FEEDBACK_SYS,
         messages: [{ role: 'user', content: userMsg }]
@@ -4775,7 +4775,7 @@ async function chatGo() {
       method: 'POST',
       headers: _headers2,
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-4-6',
         max_tokens: 900,
         stream: true,
         system: [{type:'text', text:SYS, cache_control:{type:'ephemeral'}}],
