@@ -50,11 +50,11 @@ body{display:flex;flex-direction:column;overflow:hidden;height:100%}
 #hdr{background:var(--g1);border-bottom:none;padding:10px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;z-index:10;overflow:hidden}
 .hlogo{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 #hdr h1{font-family:'Lora',serif;font-size:16px;font-weight:500;color:var(--wh);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#hdr-right{margin-left:auto;display:flex;align-items:center;gap:3px;flex-shrink:0}
+#hdr-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .hbadge{font-size:10px;font-weight:500;color:var(--g4);background:rgba(255,255,255,.15);padding:3px 9px;border-radius:20px}
-.hbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:5px 10px;font-size:11.5px;font-family:'Inter',sans-serif;color:rgba(255,255,255,.9);cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0}
+.hbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:7px 13px;font-size:12px;font-family:'Inter',sans-serif;color:rgba(255,255,255,.9);cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
 .hbtn:hover{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.2)}
-.hbtn svg{width:14px;height:14px;flex-shrink:0}
+.hbtn svg{width:16px;height:16px;flex-shrink:0}
 #child-pill{display:none;align-items:center;gap:5px;background:var(--tc5);border:1px solid var(--tc4);border-radius:20px;padding:4px 10px;font-size:11.5px;color:var(--tc1);cursor:pointer}
 #child-pill.visible{display:flex}
 /* tabs */
@@ -552,13 +552,11 @@ body.mobile-mode .hbtn{padding:5px 8px}
 .pwa-dismiss:hover{background:rgba(255,255,255,.1)}
 
 @media (max-width: 480px) {
-  .hbtn span { display: none !important; }
-  .hbtn { padding: 5px 6px !important; gap: 0 !important; min-width:28px; }
-  .hbtn svg { width:13px !important; height:13px !important; }
-  #hdr-right { gap: 2px !important; }
-  #hdr h1 { font-size: 13px !important; max-width: 100px; overflow:hidden; text-overflow:ellipsis; }
-  .hlogo { width:28px !important; height:28px !important; flex-shrink:0; }
-  #hdr { padding: 8px 10px !important; gap:6px !important; }
+  .hbtn { padding: 6px 10px !important; gap: 5px !important; font-size:12px !important; }
+  .hbtn svg { width:14px !important; height:14px !important; }
+  #hdr-right { gap: 6px !important; }
+  .hlogo { width:30px !important; height:30px !important; flex-shrink:0; }
+  #hdr { padding: 9px 14px !important; gap:0 !important; }
 }
 #chips::-webkit-scrollbar{display:none}
 </style>
