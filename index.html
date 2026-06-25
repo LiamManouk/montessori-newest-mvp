@@ -58,10 +58,10 @@ body{display:flex;flex-direction:column;overflow:hidden;height:100%}
 #child-pill{display:none;align-items:center;gap:5px;background:var(--tc5);border:1px solid var(--tc4);border-radius:20px;padding:4px 10px;font-size:11.5px;color:var(--tc1);cursor:pointer}
 #child-pill.visible{display:flex}
 /* tabs */
-#tab-nav{background:var(--g1);border-top:none;display:flex;flex-shrink:0}
-.tab-btn{flex:1;padding:10px;font-size:13px;font-family:'Inter',sans-serif;font-weight:400;color:rgba(255,255,255,.6);background:none;border:none;cursor:pointer;border-top:2px solid transparent;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
-.tab-btn svg{width:15px;height:15px;flex-shrink:0}
-.tab-btn.active{color:#fff;border-top-color:var(--tc2);font-weight:500}
+#tab-nav{background:var(--g1);border-top:2px solid rgba(255,255,255,.08);display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom)}
+.tab-btn{flex:1;padding:13px 4px 11px;font-size:12px;font-family:'Inter',sans-serif;font-weight:400;color:rgba(255,255,255,.55);background:none;border:none;cursor:pointer;border-top:3px solid transparent;transition:all .15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.tab-btn svg{width:22px;height:22px;flex-shrink:0}
+.tab-btn.active{color:#fff;border-top-color:var(--tc2);font-weight:600;background:rgba(255,255,255,.07)}
 .tab-btn:hover:not(.active){color:rgba(255,255,255,.85);background:rgba(255,255,255,.08)}
 /* views */
 #view-chat{display:none;flex-direction:column;height:100%;overflow:hidden}
@@ -322,7 +322,7 @@ ul.donts li::before{content:"✗";position:absolute;left:0;color:#C86050;font-we
 .ob-next:hover{background:var(--g1)}
 .ob-next:disabled{background:var(--s3);cursor:not-allowed}
 /* mobile mode overrides */
-body.mobile-mode #tab-nav .tab-btn{font-size:11px;padding:8px 4px}
+body.mobile-mode #tab-nav .tab-btn{font-size:11px;padding:12px 4px 10px}
 body.mobile-mode .chip{font-size:10.5px;padding:4px 9px}
 body.mobile-mode .bub{font-size:13px}
 body.mobile-mode #chips{padding:6px 12px 8px;gap:4px}
