@@ -539,10 +539,29 @@ body.mobile-mode .hbtn{padding:5px 8px}
 .feedback-wrap { display:flex; gap:8px; padding:8px 12px 10px 44px; align-items:center; flex-wrap:wrap; border-top:1px solid var(--s2); margin-top:4px; }
 .fb-btn { background:none; border:1px solid #c8b99a; border-radius:20px; padding:5px 14px; font-size:15px; cursor:pointer; transition:background 0.2s; }
 .fb-btn:hover { background:#f0e8dc; }
+
+/* ── PWA INSTALL BANNER ── */
+#pwa-banner{position:fixed;bottom:0;left:0;right:0;background:var(--g1);color:#fff;z-index:500;padding:16px 18px 20px;box-shadow:0 -4px 20px rgba(0,0,0,.25);transform:translateY(100%);transition:transform .35s ease;border-radius:18px 18px 0 0}
+#pwa-banner.show{transform:translateY(0)}
+.pwa-banner-title{font-family:'Lora',serif;font-size:15px;font-weight:400;margin-bottom:4px}
+.pwa-banner-sub{font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.55;margin-bottom:14px}
+.pwa-steps{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.pwa-step{display:flex;align-items:center;gap:10px;font-size:12.5px;color:rgba(255,255,255,.9)}
+.pwa-step-num{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.pwa-dismiss{background:none;border:1px solid rgba(255,255,255,.25);border-radius:8px;color:rgba(255,255,255,.7);font-size:12px;font-family:'Inter',sans-serif;padding:8px 16px;cursor:pointer;width:100%}
+.pwa-dismiss:hover{background:rgba(255,255,255,.1)}
 </style>
 </head>
 <body>
 <div id="wrap">
+
+<!-- ── PWA INSTALL BANNER ── -->
+<div id="pwa-banner">
+  <div class="pwa-banner-title">Als App auf dem Homescreen speichern</div>
+  <div class="pwa-banner-sub" id="pwa-sub"></div>
+  <div class="pwa-steps" id="pwa-steps"></div>
+  <button class="pwa-dismiss" onclick="dismissPwaBanner()">Nicht mehr anzeigen</button>
+</div>
 
 <div id="onboarding">
   <div class="ob-header">
@@ -5214,6 +5233,57 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+// ── PWA INSTALL BANNER ────────────────────────────────
+function isIOS() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+function isAndroid() {
+  return /android/i.test(navigator.userAgent);
+}
+function isInStandaloneMode() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function showPwaBanner() {
+  if (isInStandaloneMode()) return; // bereits installiert
+  if (localStorage.getItem('pwa_dismissed')) return;
+
+  var opens = parseInt(localStorage.getItem('pwa_open_count') || '0') + 1;
+  localStorage.setItem('pwa_open_count', String(opens));
+  if (opens < 2) return; // erst ab dem 2. Öffnen
+
+  var banner = document.getElementById('pwa-banner');
+  var sub = document.getElementById('pwa-sub');
+  var steps = document.getElementById('pwa-steps');
+
+  if (isIOS()) {
+    sub.textContent = 'Speichere den Montessori-Begleiter direkt auf deinem iPhone — so hast du ihn immer griffbereit.';
+    steps.innerHTML =
+      '<div class="pwa-step"><div class="pwa-step-num">1</div><span>Tippe auf das Teilen-Symbol <strong>⬆</strong> unten in Safari</span></div>' +
+      '<div class="pwa-step"><div class="pwa-step-num">2</div><span>Scrolle und wähle <strong>„Zum Home-Bildschirm"</strong></span></div>' +
+      '<div class="pwa-step"><div class="pwa-step-num">3</div><span>Tippe oben rechts auf <strong>„Hinzufügen"</strong></span></div>';
+  } else if (isAndroid()) {
+    sub.textContent = 'Speichere den Montessori-Begleiter direkt auf deinem Homescreen — so hast du ihn immer griffbereit.';
+    steps.innerHTML =
+      '<div class="pwa-step"><div class="pwa-step-num">1</div><span>Tippe oben rechts auf das <strong>⋮ Menü</strong> in Chrome</span></div>' +
+      '<div class="pwa-step"><div class="pwa-step-num">2</div><span>Wähle <strong>„App installieren"</strong> oder <strong>„Zum Startbildschirm"</strong></span></div>';
+  } else {
+    return; // Desktop — kein Banner
+  }
+
+  setTimeout(function() {
+    banner.classList.add('show');
+  }, 1500); // kurz nach App-Start
+}
+
+function dismissPwaBanner() {
+  document.getElementById('pwa-banner').classList.remove('show');
+  localStorage.setItem('pwa_dismissed', '1');
+}
+
+showPwaBanner();
+
 </script>
 </body>
 </html>
