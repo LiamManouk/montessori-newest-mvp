@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Montessori-Begleiter</title>
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Begleiter">
+<meta name="theme-color" content="#2C4A35">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -5197,6 +5204,16 @@ try {
 } catch(e) {}
 renderThemes();
 checkOnboarding();
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/montessori-newest-mvp/sw.js')
+      .then(function(reg) { console.log('SW registriert:', reg.scope); })
+      .catch(function(err) { console.log('SW Fehler:', err); });
+  });
+}
+</script>
 </script>
 </body>
 </html>
