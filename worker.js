@@ -258,26 +258,21 @@ export default {
         const maxNutzer = typeof profile.max_nutzer === "number" ? profile.max_nutzer : null;
         const geraete = Array.isArray(profile.registrierte_geraete) ? profile.registrierte_geraete : [];
 
-        // KV-basierte Deduplication: verhindert Doppelzählung auch bei JSONBin-Caching
-        const kvRegistered = await env.RATE_STORE.get(`kita-reg:${match.binId}:${deviceId}`);
-        if (kvRegistered || geraete.includes(deviceId)) {
+        // Bereits verbunden? KV ist die primäre Quelle der Wahrheit
+        const alreadyMember = await env.RATE_STORE.get(`kita:${deviceId}`);
+        if (alreadyMember || geraete.includes(deviceId)) {
           await env.RATE_STORE.put(`kita:${deviceId}`, "1", { expirationTtl: 60 * 60 * 24 * 30 });
-          await env.RATE_STORE.put(`kita-reg:${match.binId}:${deviceId}`, "1", { expirationTtl: 60 * 60 * 24 * 365 });
           return json({ ok: true, profile });
         }
         if (maxNutzer !== null && geraete.length >= maxNutzer) return json({ ok: false, error: "Das Kontingent dieser Kita ist erreicht." }, 403);
 
-        // Set-Deduplication beim Schreiben
-        const geraeteSet = new Set(geraete);
-        geraeteSet.add(deviceId);
-        const updatedProfile = Object.assign({}, profile, { registrierte_geraete: [...geraeteSet] });
+        const updatedProfile = Object.assign({}, profile, { registrierte_geraete: [...new Set([...geraete, deviceId])] });
         await fetch(`https://api.jsonbin.io/v3/b/${match.binId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json", "X-Master-Key": env.JSONBIN_API_KEY },
           body: JSON.stringify(updatedProfile)
         });
         await env.RATE_STORE.put(`kita:${deviceId}`, "1", { expirationTtl: 60 * 60 * 24 * 30 });
-        await env.RATE_STORE.put(`kita-reg:${match.binId}:${deviceId}`, "1", { expirationTtl: 60 * 60 * 24 * 365 });
         return json({ ok: true, profile: updatedProfile });
       }
 
