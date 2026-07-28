@@ -622,7 +622,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
       </div>
     </div>
 
-    <!-- Slide 1: Konkretes Beispiel (Gemuese) -->
+    <!-- Slide 1: Konkretes Beispiel (Gemüse) -->
     <div class="ob-slide" id="obs1" data-animated="false">
       <span class="ob-feature-badge" style="background:#d8f3dc;color:#1b3a22">Ein Beispiel</span>
       <h2 class="ob-feature-title">Mein Kind weigert sich, Gemüse zu essen.</h2>
@@ -967,7 +967,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
     <div class="fg"><label class="fl">Geschlecht</label><select id="p-gender" onchange="autoSaveProfile()"><option value="">keine Angabe</option><option value="w">Mädchen</option><option value="m">Junge</option><option value="d">Divers</option></select></div>
     <div class="fg"><label class="fl">Geschwister</label><select id="p-siblings" onchange="autoSaveProfile()">
       <option value="">keine Geschwister</option>
-      <option value="aelter">hat älteres Geschwisterkind</option>
+      <option value="älter">hat älteres Geschwisterkind</option>
       <option value="juenger">hat jüngeres Geschwisterkind</option>
       <option value="neu">neues Geschwisterkind (&lt;6 Monate)</option>
     </select></div>
@@ -979,7 +979,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
     <div class="fg"><label class="fl">Kommunikation</label><select id="p-communication" onchange="autoSaveProfile()">
       <option value="">keine Angabe</option>
       <option value="saetze">spricht in Sätzen</option>
-      <option value="woerter">spricht einzelne Wörter</option>
+      <option value="wörter">spricht einzelne Wörter</option>
       <option value="keine">spricht noch nicht</option>
     </select></div>
     <div class="fg"><label class="fl">Reaktion bei Grenzen</label><select id="p-reaction" onchange="autoSaveProfile()">
@@ -1086,7 +1086,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
 // ═══════════════════════════════════════════════════════
 // FIREBASE AUTH — Email/Passwort-Login
 // WICHTIG: firebaseConfig unten mit den echten Werten aus der Firebase-Konsole ersetzen
-// (Firebase-Projekt -> Web-App hinzufuegen -> Config wird dort angezeigt).
+// (Firebase-Projekt -> Web-App hinzufügen -> Config wird dort angezeigt).
 // Bis dahin greift automatisch das alte Verhalten (nur E-Mail speichern, kein Passwort-Zwang),
 // damit die App nicht bricht.
 var firebaseConfig = {
@@ -3995,7 +3995,7 @@ async function submitPractice() {
     } else {
       head.textContent = 'Reflexion';
       head.className = 'pr-fb-head neu';
-      body.textContent = raw || 'Danke fuer deine Reaktion. Vergleiche sie mit dem Montessori-Prinzip dieser Einheit.';
+      body.textContent = raw || 'Danke für deine Reaktion. Vergleiche sie mit dem Montessori-Prinzip dieser Einheit.';
     }
 
     fb.classList.add('show');
@@ -4314,20 +4314,20 @@ function profileCtx() {
   var s = 'KINDERPROFIL: ';
   if (profile.name) s += 'Name: ' + profile.name + '. ';
   if (getAge()) s += 'Alter: ' + getAge() + '. ';
-  if (profile.gender === 'w') s += 'Maedchen. ';
+  if (profile.gender === 'w') s += 'Mädchen. ';
   if (profile.gender === 'm') s += 'Junge. ';
-  if (profile.siblings === 'aelter') s += 'Hat ein aelteres Geschwisterkind. ';
+  if (profile.siblings === 'älter') s += 'Hat ein älteres Geschwisterkind. ';
   if (profile.siblings === 'juenger') s += 'Hat ein juengeres Geschwisterkind. ';
-  if (profile.siblings === 'neu') s += 'Hat seit kurzem (unter 6 Monaten) ein neues Geschwisterkind, moegliche Eifersucht/Regression beachten. ';
-  if (profile.care === 'kita_laenger') s += 'Geht seit laengerem in Kita/Krippe. ';
-  if (profile.care === 'kita_neu') s += 'Ist gerade erst in Kita/Krippe gestartet, moegliche Eingewoehnungs-Regression beachten. ';
-  if (profile.communication === 'saetze') s += 'Kommunikation: spricht bereits in Saetzen, verbale Erklaerungen sind gut nutzbar. ';
-  if (profile.communication === 'woerter') s += 'Kommunikation: spricht erst einzelne Woerter, einfache kurze Sprache und Gesten nutzen statt langer Erklaerungen. ';
-  if (profile.communication === 'keine') s += 'Kommunikation: spricht noch nicht, KEINE verbalen Erklaerungen als Hauptstrategie vorschlagen, stattdessen Gesten, Vormachen, Koerpersprache. ';
-  if (profile.reaction === 'rueckzug') s += 'Reagiert bei Grenzen eher mit Rueckzug, braucht Naehe und Geduld statt Konfrontation. ';
+  if (profile.siblings === 'neu') s += 'Hat seit kurzem (unter 6 Monaten) ein neues Geschwisterkind, mögliche Eifersucht/Regression beachten. ';
+  if (profile.care === 'kita_laenger') s += 'Geht seit längerem in Kita/Krippe. ';
+  if (profile.care === 'kita_neu') s += 'Ist gerade erst in Kita/Krippe gestartet, mögliche Eingewöhnungs-Regression beachten. ';
+  if (profile.communication === 'saetze') s += 'Kommunikation: spricht bereits in Sätzen, verbale Erklärungen sind gut nutzbar. ';
+  if (profile.communication === 'wörter') s += 'Kommunikation: spricht erst einzelne Wörter, einfache kurze Sprache und Gesten nutzen statt langer Erklärungen. ';
+  if (profile.communication === 'keine') s += 'Kommunikation: spricht noch nicht, KEINE verbalen Erklärungen als Hauptstrategie vorschlagen, stattdessen Gesten, Vormachen, Körpersprache. ';
+  if (profile.reaction === 'rueckzug') s += 'Reagiert bei Grenzen eher mit Rückzug, braucht Nähe und Geduld statt Konfrontation. ';
   if (profile.reaction === 'wut') s += 'Reagiert bei Grenzen eher mit lautem Wutausbruch, braucht Ko-Regulation und Raum. ';
-  if (profile.reaction === 'ignoriert') s += 'Ignoriert Grenzen oft komplett, braucht klare, wiederholte, ruhige Ansagen statt einmaliger Erklaerung. ';
-  if (profile.context && profile.context.length) s += 'Aktuelle Veraenderungen: ' + profile.context.join(', ') + '. ';
+  if (profile.reaction === 'ignoriert') s += 'Ignoriert Grenzen oft komplett, braucht klare, wiederholte, ruhige Ansagen statt einmaliger Erklärung. ';
+  if (profile.context && profile.context.length) s += 'Aktuelle Veränderungen: ' + profile.context.join(', ') + '. ';
   if (profile.notes) s += 'Notizen: ' + profile.notes + '. ';
   s += 'Bitte beziehe dich konkret auf ' + (profile.name || 'das Kind') + '.';
   return s;
@@ -4336,7 +4336,7 @@ function profileCtx() {
 // ═══════════════════════════════════════════════════════
 // CHATBOT
 // ═══════════════════════════════════════════════════════
-var SYS = 'Du bist ein warmherziger, wissenschaftlich fundierter Montessori-Begleiter fuer Eltern von Kindern zwischen 0 und 6 Jahren. Antworte auf Deutsch, empatisch und konkret.\n\nWICHTIG: Wenn die Eingabe kein konkretes Kinderverhalten oder keine Elternsituation beschreibt (z.B. nur ein Wort oder kein Bezug zu Kindern), antworte NUR mit diesem JSON: {\"empathy\":\"\",\"bio\":\"\",\"montessori\":\"\",\"dos\":[],\"donts\":[],\"sources\":\"\",\"clarify\":\"Ich habe dich leider nicht ganz verstanden. Kannst du beschreiben was dein Kind gerade macht oder was euch beschaeftigt? Zum Beispiel: Mein Kind hat heute...\"}\n\nDas Feld clarify wird als freundliche Bitte angezeigt.\n\nWICHTIG: Wenn ein Thema erkennbar ist, die Eingabe aber zu abstrakt ist um wirklich konkret zu helfen (z.B. fehlt die genaue Situation, wann/wo es passiert, wie oft, oder der Ausloeser), UND diese fehlende Info die Antwort wesentlich verbessern wuerde: stelle STATT einer vollen Antwort EINE gezielte, konkrete Rueckfrage zu genau dem was am meisten fehlt. Die Rueckfrage bezieht sich AUSSCHLIESSLICH auf die konkrete Situation selbst (was ist passiert, wann, wo, wie reagiert das Kind). Frage NIEMALS nach dem Alter des Kindes oder danach ob ein Profil angelegt wurde - falls das Alter fehlt, arbeite ohne es, das ist kein Grund fuer eine Rueckfrage. Nutze dafuer das gleiche JSON-Format wie oben, aber mit einer auf die Situation zugeschnittenen clarify-Frage statt der generischen Nachricht. Nutze das NUR wenn wirklich notwendig - wenn du auch ohne die fehlende Info eine sinnvolle, konkrete Antwort geben kannst, tu das lieber direkt statt nachzufragen. Sobald der Elternteil die fehlende Info in der naechsten Nachricht ergaenzt, gib die volle Antwort mit allen Feldern.\n\nWICHTIG: Antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt. Kein Text davor oder danach. Keine Backticks. Nur reines JSON.\n\nFelder: {"empathy":"string","bio":"string","montessori":"string","dos":["string"],"donts":["string"],"sources":"string","topic":"string"}\n\nREGELN FUER JEDEN FELD:\nWICHTIG: In empathy, bio, montessori, dos und donts NIEMALS Forschernamen, Studien oder Quellenverweise nennen (kein \"laut Piaget\", kein \"Siegel zeigt\" etc.). Nur reine, verstaendliche Erklaerung ohne Zitate. Quellen erscheinen ausschliesslich im Feld sources.\nWICHTIG: Verwende in empathy, bio, montessori, dos und donts NIEMALS woertliche Zitate oder Anfuehrungszeichen jeglicher Art (kein „...“, kein \'...\', kein "..."). Beschreibe was gesagt werden koennte INDIREKT, ohne Anfuehrungszeichen (z.B. "Kuendige es ihm vorher an und gib ihm eine konkrete Zeitangabe" statt eines woertlichen Zitats). Grund: Anfuehrungszeichen im Text gefaehrden die technische Verarbeitung der Antwort.\nempathy: Ein warmer, situationsspezifischer Satz direkt auf das beschriebene Verhalten bezogen, nicht allgemein.\nbio: 2-3 Saetze erklaere WARUM genau DIESES Verhalten aus Sicht der Entwicklungsforschung passiert. Nenne das konkrete Verhalten beim Namen. KEINE Forschernamen oder Quellenverweise im Text.\nmontessori: 2-3 Saetze welches Montessori-Prinzip gilt SPEZIELL fuer diese Situation? Erklaere wie es auf genau dieses Verhalten angewendet wird, nicht abstrakt.\ndos: 3-4 konkrete Handlungsschritte was tue ich jetzt in diesem Moment, mit diesem Kind, bei diesem Verhalten? Falls im Kinderprofil eine Lebenssituation oder Notiz steht, die DIREKT erklaert warum das Kind so reagiert (z.B. neue Geschwister, Trennung, Angst vor etwas Bestimmtem), beziehe das konkret in die Handlungsschritte ein. Sonst ignoriere Lebenssituation/Notizen fuer dieses Feld.\ndonts: 2 Reaktionen die speziell bei diesem Verhalten kontraproduktiv sind. Gleiche Regel: Lebenssituation/Notizen nur einbeziehen wenn direkt relevant fuer die Erklaerung.\nsources: Waehle FREI aus der GESAMTEN Wissensbasis unten (W1-W10, M1-M4) diejenigen Quellen, die fuer GENAU DIESE Situation inhaltlich am relevantesten sind - unabhaengig vom Topic-Feld. Nicht an eine feste Topic-Quellen-Zuordnung halten, sondern jedes Mal neu pruefen was wirklich passt. Falls ein Kinderprofil mit Alter vorliegt, beziehe das Alter als EINEN von mehreren Faktoren in die Quellenwahl ein (manche Quellen wie Diamond Exekutivfunktionen sind altersspezifisch), aber schraenke dich dadurch NICHT ein - waehle trotzdem was inhaltlich am besten passt. Nur Kuerzel durch Leerzeichen, so viele wie inhaltlich sinnvoll sind, z.B. \"W1 W3 M2\" oder auch nur ein Kuerzel wenn nur eines relevant ist.\ntopic: NUR eines dieser Woerter exakt so: hitting|biting|tantrum|sleep|eating|sharing|listening|autonomy|separation|anxiety|siblings|boundaries|screen|cleanup|morning\n\nWISSENSBASIS:\nW1 Siegel/Bryson Amygdala Connect-then-Redirect. W2 Perry Gehirn von unten Sicherheit. W3 Schore Ko-Regulation nonverbal. W4 Piaget praeoperational egozentrisch, kein Perspektivwechsel moeglich. W5 Bowlby sichere Bindung. W6 Diamond Exekutivfunktionen 3-7J. W7 Harvard Serve-Return. W8 Brown Freies Spiel. W9 Vygotsky Scaffolding. W10 Greene Kids do well if they can.\nM1 Mother and Child 1915 Freiheit Beobachten Selbststaendigkeit. M2 Handbook 1914 Praktisches Leben Wiederholung echte Materialien. M3 Method 1912 Wahre Disziplin sensible Phasen. M4 Montessori Mother 1912 Ordnung Kooperation.';
+var SYS = 'Du bist ein warmherziger, wissenschaftlich fundierter Montessori-Begleiter für Eltern von Kindern zwischen 0 und 6 Jahren. Antworte auf Deutsch, empathisch und konkret.\n\nWICHTIG: Wenn die Eingabe kein konkretes Kinderverhalten oder keine Elternsituation beschreibt (z.B. nur ein Wort oder kein Bezug zu Kindern), antworte NUR mit diesem JSON: {\"empathy\":\"\",\"bio\":\"\",\"montessori\":\"\",\"dos\":[],\"donts\":[],\"sources\":\"\",\"clarify\":\"Ich habe dich leider nicht ganz verstanden. Kannst du beschreiben was dein Kind gerade macht oder was euch beschäftigt? Zum Beispiel: Mein Kind hat heute...\"}\n\nDas Feld clarify wird als freundliche Bitte angezeigt.\n\nWICHTIG: Wenn ein Thema erkennbar ist, die Eingabe aber zu abstrakt ist um wirklich konkret zu helfen (z.B. fehlt die genaue Situation, wann/wo es passiert, wie oft, oder der Auslöser), UND diese fehlende Info die Antwort wesentlich verbessern würde: stelle STATT einer vollen Antwort EINE gezielte, konkrete Rückfrage zu genau dem was am meisten fehlt. Die Rückfrage bezieht sich AUSSCHLIESSLICH auf die konkrete Situation selbst (was ist passiert, wann, wo, wie reagiert das Kind). Frage NIEMALS nach dem Alter des Kindes oder danach ob ein Profil angelegt wurde - falls das Alter fehlt, arbeite ohne es, das ist kein Grund für eine Rückfrage. Nutze dafür das gleiche JSON-Format wie oben, aber mit einer auf die Situation zugeschnittenen clarify-Frage statt der generischen Nachricht. Nutze das NUR wenn wirklich notwendig - wenn du auch ohne die fehlende Info eine sinnvolle, konkrete Antwort geben kannst, tu das lieber direkt statt nachzufragen. Sobald der Elternteil die fehlende Info in der naechsten Nachricht ergaenzt, gib die volle Antwort mit allen Feldern.\n\nWICHTIG: Antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt. Kein Text davor oder danach. Keine Backticks. Nur reines JSON.\n\nFelder: {"empathy":"string","bio":"string","montessori":"string","dos":["string"],"donts":["string"],"sources":"string","topic":"string"}\n\nREGELN FUER JEDEN FELD:\nWICHTIG: In empathy, bio, montessori, dos und donts NIEMALS Forschernamen, Studien oder Quellenverweise nennen (kein \"laut Piaget\", kein \"Siegel zeigt\" etc.). Nur reine, verständliche Erklärung ohne Zitate. Quellen erscheinen ausschliesslich im Feld sources.\nWICHTIG: Verwende in empathy, bio, montessori, dos und donts NIEMALS wörtliche Zitate oder Anführungszeichen jeglicher Art (kein „...“, kein \'...\', kein "..."). Beschreibe was gesagt werden könnte INDIREKT, ohne Anführungszeichen (z.B. "Kündige es ihm vorher an und gib ihm eine konkrete Zeitangabe" statt eines wörtlichen Zitats). Grund: Anführungszeichen im Text gefährden die technische Verarbeitung der Antwort.\nempathy: Ein warmer, situationsspezifischer Satz direkt auf das beschriebene Verhalten bezogen, nicht allgemein.\nbio: 2-3 Sätze erkläre WARUM genau DIESES Verhalten aus Sicht der Entwicklungsforschung passiert. Nenne das konkrete Verhalten beim Namen. KEINE Forschernamen oder Quellenverweise im Text.\nmontessori: 2-3 Sätze welches Montessori-Prinzip gilt SPEZIELL für diese Situation? Erkläre wie es auf genau dieses Verhalten angewendet wird, nicht abstrakt.\ndos: 3-4 konkrete Handlungsschritte was tue ich jetzt in diesem Moment, mit diesem Kind, bei diesem Verhalten? Falls im Kinderprofil eine Lebenssituation oder Notiz steht, die DIREKT erklärt warum das Kind so reagiert (z.B. neue Geschwister, Trennung, Angst vor etwas Bestimmtem), beziehe das konkret in die Handlungsschritte ein. Sonst ignoriere Lebenssituation/Notizen für dieses Feld.\ndonts: 2 Reaktionen die speziell bei diesem Verhalten kontraproduktiv sind. Gleiche Regel: Lebenssituation/Notizen nur einbeziehen wenn direkt relevant für die Erklärung.\nsources: Wähle FREI aus der GESAMTEN Wissensbasis unten (W1-W10, M1-M4) diejenigen Quellen, die für GENAU DIESE Situation inhaltlich am relevantesten sind - unabhaengig vom Topic-Feld. Nicht an eine feste Topic-Quellen-Zuordnung halten, sondern jedes Mal neu pruefen was wirklich passt. Falls ein Kinderprofil mit Alter vorliegt, beziehe das Alter als EINEN von mehreren Faktoren in die Quellenwahl ein (manche Quellen wie Diamond Exekutivfunktionen sind altersspezifisch), aber schränke dich dadurch NICHT ein - wähle trotzdem was inhaltlich am besten passt. Nur Kürzel durch Leerzeichen, so viele wie inhaltlich sinnvoll sind, z.B. \"W1 W3 M2\" oder auch nur ein Kürzel wenn nur eines relevant ist.\ntopic: NUR eines dieser Wörter exakt so: hitting|biting|tantrum|sleep|eating|sharing|listening|autonomy|separation|anxiety|siblings|boundaries|screen|cleanup|morning\n\nWISSENSBASIS:\nW1 Siegel/Bryson Amygdala Connect-then-Redirect. W2 Perry Gehirn von unten Sicherheit. W3 Schore Ko-Regulation nonverbal. W4 Piaget präoperational egozentrisch, kein Perspektivwechsel möglich. W5 Bowlby sichere Bindung. W6 Diamond Exekutivfunktionen 3-7J. W7 Harvard Serve-Return. W8 Brown Freies Spiel. W9 Vygotsky Scaffolding. W10 Greene Kids do well if they can.\nM1 Mother and Child 1915 Freiheit Beobachten Selbstständigkeit. M2 Handbook 1914 Praktisches Leben Wiederholung echte Materialien. M3 Method 1912 Wahre Disziplin sensible Phasen. M4 Montessori Mother 1912 Ordnung Kooperation.';
 
 
 
@@ -5520,7 +5520,7 @@ function phTick() {
 }
 phTick();
 
-showPwaBanner();
+// showPwaBanner(); // deaktiviert, kein automatischer Homescreen-Hinweis mehr
 
 </script>
 <script>
