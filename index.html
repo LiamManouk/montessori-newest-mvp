@@ -128,8 +128,22 @@ ul.donts li::before{content:"✗";position:absolute;left:0;color:#C86050;font-we
 #chips{padding:6px 14px 8px;display:flex;flex-wrap:nowrap;gap:6px;border-top:1px solid var(--s2);background:var(--s1);flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
 .chip{font-size:11.5px;padding:5px 11px;border-radius:20px;border:1px solid var(--s3);background:var(--wh);color:var(--mx);cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;flex-shrink:0}
 .chip:hover{background:var(--g5);border-color:var(--g2);color:var(--g1)}
-#ibar{padding:9px 18px 13px;background:var(--s1);flex-shrink:0}
-.iwrap{display:flex;gap:8px;align-items:flex-end;background:var(--wh);border:1px solid var(--s3);border-radius:var(--r);padding:7px 7px 7px 13px}
+#ibar{padding:9px 18px 13px;background:var(--s1);flex-shrink:0;transition:padding .2s ease}
+.iwrap{display:flex;gap:8px;align-items:flex-end;background:var(--wh);border:1px solid var(--s3);border-radius:var(--r);padding:7px 7px 7px 13px;transition:all .2s ease}
+#ibar.subtle{padding:5px 18px 8px}
+#ibar.subtle .iwrap{background:transparent;border-color:transparent;box-shadow:none;transform:scale(.9);transform-origin:center bottom;opacity:.5}
+#age-popup,#login-popup{position:fixed;top:50%;left:50%;width:min(380px,88vw);min-height:33vh;background:var(--wh);color:var(--tx);border-radius:20px;z-index:601;box-shadow:0 20px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.94);transition:opacity .2s ease,transform .2s ease}
+#age-popup.show,#login-popup.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+#age-overlay,#login-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:600;display:none}
+#age-overlay.show,#login-overlay.show{display:block}
+.age-popup-body{padding:22px 22px 26px;display:flex;flex-direction:column;flex:1;justify-content:center;gap:16px}
+#age-popup-desc{font-size:14.5px;color:var(--mx);line-height:1.55;margin:0}
+.age-popup-row{display:flex;gap:10px;align-items:center}
+#age-popup-input{width:76px;padding:11px 12px;border-radius:10px;border:1px solid var(--s3);background:var(--s1);color:var(--tx);font-size:16px;font-family:'Inter',sans-serif}
+.age-popup-unit{font-size:14px;color:var(--mx)}
+.age-popup-save{background:var(--g1);color:#fff;border:none;border-radius:10px;padding:12px 16px;font-size:14.5px;font-weight:600;cursor:pointer;width:100%}
+.age-popup-link{background:none;border:none;color:var(--mx);font-size:13px;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:2px;font-family:'Inter',sans-serif}
+#login-popup .age-popup-body{gap:10px}
 .iwrap:focus-within{border-color:var(--tc2)}
 #inp{flex:1;border:none;outline:none;font-size:16px;font-family:'Inter',sans-serif;color:var(--tx);background:transparent;resize:none;min-height:22px;max-height:80px;line-height:1.5}
 #inp::placeholder{color:var(--lx)}
@@ -755,6 +769,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
   <div id="ibar">
     <div class="iwrap">
       <textarea id="inp" rows="1" placeholder="Situation beschreiben..."
+        onfocus="document.getElementById('ibar').classList.remove('subtle')"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();chatGo()}"
         oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';document.getElementById('sbtn').disabled=!this.value.trim()||chatBusy"></textarea>
       <button id="sbtn" onclick="chatGo()" disabled>
@@ -763,6 +778,32 @@ body.mobile-mode .hbtn{padding:5px 8px}
     </div>
   </div>
   <div id="foot">Wissenschaftliche Entwicklungsforschung & Montessori-Originaltexte · Kein Ersatz für Fachberatung</div>
+
+  <div id="age-overlay"></div>
+  <div id="age-popup">
+    <div class="ph"><h2>Kinderalter eingeben</h2><button class="xbtn" onclick="closeAgePopup()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="age-popup-body">
+      <p id="age-popup-desc">Damit die Antwort genauer wird und sich an das Alter deines Kindes anpasst.</p>
+      <div class="age-popup-row">
+        <input type="number" id="age-popup-input" min="0" max="10" step="0.5" placeholder="z. B. 3" inputmode="decimal">
+        <span class="age-popup-unit">Jahre</span>
+      </div>
+      <button class="age-popup-save" onclick="saveAgeQuick()">Speichern</button>
+      <button class="age-popup-link" onclick="closeAgePopup();openPanel('profile')">Kinderprofil öffnen und Antwort weiter schärfen</button>
+    </div>
+  </div>
+
+  <div id="login-overlay"></div>
+  <div id="login-popup">
+    <div class="ph"><h2>Willkommen zurück</h2><button class="xbtn" onclick="closeLoginPopup()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="age-popup-body">
+      <p style="font-size:14.5px;color:var(--mx);line-height:1.55;margin:0">Speichere deinen Verlauf, damit nichts verloren geht.</p>
+      <input type="email" id="login-email-input" placeholder="eure@email.de" style="width:100%;padding:11px 12px;border:1px solid var(--s3);border-radius:10px;font-size:16px;font-family:inherit;background:var(--s1)">
+      <input type="password" id="login-password-input" placeholder="Passwort (mind. 6 Zeichen)" style="width:100%;padding:11px 12px;border:1px solid var(--s3);border-radius:10px;font-size:16px;font-family:inherit;background:var(--s1)">
+      <div id="login-error" style="color:#b91c1c;font-size:12.5px;min-height:16px"></div>
+      <button class="age-popup-save" onclick="loginPopupSubmit()">Anmelden</button>
+    </div>
+  </div>
 </div>
 
 <div id="view-learn">
@@ -1061,15 +1102,8 @@ try {
   FIREBASE_READY = false;
 }
 
-async function obAuthSubmit() {
-  var emailEl = document.getElementById('ob-email-input');
-  var pwEl = document.getElementById('ob-password-input');
-  var errEl = document.getElementById('ob-auth-error');
-  var email = emailEl ? emailEl.value.trim() : '';
-  var password = pwEl ? pwEl.value : '';
-  if (errEl) errEl.textContent = '';
-
-  if (!email) { if (errEl) errEl.textContent = 'Bitte E-Mail eingeben.'; return; }
+async function performAuth(email, password) {
+  if (!email) return { ok: false, error: 'Bitte E-Mail eingeben.' };
 
   if (!FIREBASE_READY) {
     localStorage.setItem('user_email', email);
@@ -1078,13 +1112,11 @@ async function obAuthSubmit() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email })
     }).catch(function() {});
-    finishOnboarding();
-    return;
+    return { ok: true };
   }
 
   if (!password || password.length < 6) {
-    if (errEl) errEl.textContent = 'Passwort muss mindestens 6 Zeichen haben.';
-    return;
+    return { ok: false, error: 'Passwort muss mindestens 6 Zeichen haben.' };
   }
 
   var auth = firebase.auth();
@@ -1095,15 +1127,12 @@ async function obAuthSubmit() {
       try {
         await auth.createUserWithEmailAndPassword(email, password);
       } catch (err2) {
-        if (errEl) errEl.textContent = 'Anmeldung fehlgeschlagen: ' + (err2.message || err2.code);
-        return;
+        return { ok: false, error: 'Anmeldung fehlgeschlagen: ' + (err2.message || err2.code) };
       }
     } else if (err.code === 'auth/wrong-password') {
-      if (errEl) errEl.textContent = 'Falsches Passwort.';
-      return;
+      return { ok: false, error: 'Falsches Passwort.' };
     } else {
-      if (errEl) errEl.textContent = 'Anmeldung fehlgeschlagen: ' + (err.message || err.code);
-      return;
+      return { ok: false, error: 'Anmeldung fehlgeschlagen: ' + (err.message || err.code) };
     }
   }
 
@@ -1113,6 +1142,19 @@ async function obAuthSubmit() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: email })
   }).catch(function() {});
+  return { ok: true };
+}
+
+async function obAuthSubmit() {
+  var emailEl = document.getElementById('ob-email-input');
+  var pwEl = document.getElementById('ob-password-input');
+  var errEl = document.getElementById('ob-auth-error');
+  var email = emailEl ? emailEl.value.trim() : '';
+  var password = pwEl ? pwEl.value : '';
+  if (errEl) errEl.textContent = '';
+
+  var result = await performAuth(email, password);
+  if (!result.ok) { if (errEl) errEl.textContent = result.error; return; }
   finishOnboarding();
 }
 // ═══════════════════════════════════════════════════════
@@ -1299,13 +1341,8 @@ function resetOnboarding() {
 }
 
 function checkOnboarding() {
-  var done = localStorage.getItem('mont_onboarded');
   applyDeviceMode();
-  if (done) {
-    document.getElementById('onboarding').classList.add('done');
-  } else {
-    obUpdateNav();
-  }
+  document.getElementById('onboarding').classList.add('done');
 }
 // ─────────────────────────────────────────────────
 
@@ -4577,6 +4614,12 @@ function scrollChat() {
     m.scrollTop = m.scrollHeight;
   }
 }
+document.getElementById('msgs').addEventListener('scroll', function() {
+  if (!window.montFirstMsgSent) return;
+  var m = this;
+  var atBottom = (m.scrollHeight - m.scrollTop - m.clientHeight) < 40;
+  document.getElementById('ibar').classList.toggle('subtle', !atBottom);
+});
 function addUserBub(text) {
   var m = document.getElementById('msgs'), d = document.createElement('div');
   d.className = 'msg user';
@@ -4870,8 +4913,17 @@ async function streamChatOnce(maxTok, d) {
 async function chatGo() {
   var inp = document.getElementById('inp'), text = inp.value.trim();
   if (!text || chatBusy) return;
+  if (document.getElementById('login-popup').classList.contains('show')) return;
+  if (document.getElementById('age-popup').classList.contains('show')) return;
+  var hasAgeNow = profile && profile.years !== undefined && profile.years !== '';
+  if (window.montAnswerCount >= 1 && !hasAgeNow && (window.montAgePopupCount || 0) < 2) {
+    showAgePopup();
+    return;
+  }
+  window.montFirstMsgSent = true;
   chatBusy = true; document.getElementById('sbtn').disabled = true;
   inp.value = ''; inp.style.height = 'auto';
+  document.getElementById('ibar').classList.add('subtle');
   addUserBub(text);
   lastQuestion = text;
   var ctx = profileCtx();
@@ -4931,6 +4983,10 @@ async function chatGo() {
     try {
       var obj = parseJSON(raw);
       renderBotIncremental(obj, d);
+      if (!obj.clarify) {
+        window.montAnswerCount = (window.montAnswerCount || 0) + 1;
+        localStorage.setItem('mont_total_answers', String(parseInt(localStorage.getItem('mont_total_answers') || '0') + 1));
+      }
       
       var topic = obj.topic || '';
       if (topic && TOPIC_LESSONS[topic]) {
@@ -5351,6 +5407,56 @@ function dismissPwaBanner() {
   document.getElementById('pwa-banner').classList.remove('show');
   localStorage.setItem('pwa_dismissed', '1');
 }
+
+function showAgePopup() {
+  if ((window.montAgePopupCount || 0) >= 2) return;
+  window.montAgePopupCount = (window.montAgePopupCount || 0) + 1;
+  document.getElementById('age-popup').classList.add('show');
+  document.getElementById('age-overlay').classList.add('show');
+}
+function closeAgePopup() {
+  document.getElementById('age-popup').classList.remove('show');
+  document.getElementById('age-overlay').classList.remove('show');
+}
+function saveAgeQuick() {
+  var val = document.getElementById('age-popup-input').value.trim();
+  if (val) {
+    profile.years = val;
+    localStorage.setItem('mont_profile', JSON.stringify(profile));
+    var yearsField = document.getElementById('p-years');
+    if (yearsField) yearsField.value = val;
+    updatePill(); updatePNote();
+  }
+  closeAgePopup();
+}
+
+function showLoginPopup() {
+  if (window.montLoginPopupShown) return;
+  if (localStorage.getItem('user_email')) return;
+  window.montLoginPopupShown = true;
+  document.getElementById('login-popup').classList.add('show');
+  document.getElementById('login-overlay').classList.add('show');
+}
+function closeLoginPopup() {
+  document.getElementById('login-popup').classList.remove('show');
+  document.getElementById('login-overlay').classList.remove('show');
+}
+async function loginPopupSubmit() {
+  var email = document.getElementById('login-email-input').value.trim();
+  var password = document.getElementById('login-password-input').value;
+  var errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  var result = await performAuth(email, password);
+  if (!result.ok) { errEl.textContent = result.error; return; }
+  closeLoginPopup();
+}
+function checkLoginPopupOnLoad() {
+  var totalAnswers = parseInt(localStorage.getItem('mont_total_answers') || '0');
+  if (totalAnswers >= 10 && !localStorage.getItem('user_email')) {
+    showLoginPopup();
+  }
+}
+checkLoginPopupOnLoad();
 
 showPwaBanner();
 
