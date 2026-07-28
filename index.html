@@ -101,32 +101,30 @@ select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%
 .pnote.show{display:block}
 /* chat */
 #msgs{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;min-height:0;overflow-anchor:none}
-.welcome{background:var(--g6);border:1px solid var(--g4);border-radius:var(--r);padding:14px 18px}
-.welcome h2{font-family:'Lora',serif;font-size:15px;font-weight:400;color:var(--g1);margin-bottom:5px}
-.welcome p{font-size:13px;color:var(--mx);line-height:1.65}
+.cta-line{text-align:center;font-family:'Lora',serif;font-size:17px;font-weight:400;color:var(--g1);padding:38px 20px;line-height:1.5}
 .msg{display:flex;gap:9px;max-width:92%}
 .msg.user{align-self:flex-end;flex-direction:row-reverse}
 .av{width:28px;height:28px;border-radius:50%;background:var(--g5);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px}
-.bub{padding:11px 14px;font-size:13.5px;line-height:1.72;border-radius:var(--r);word-break:break-word}
+.bub{padding:11px 14px;font-size:16px;line-height:1.6;border-radius:var(--r);word-break:break-word}
 .msg.bot .bub{background:var(--wh);border:1px solid var(--s2);border-radius:4px var(--r) var(--r) var(--r)}
 .msg.user .bub{background:var(--tc2);color:#fff;border-radius:var(--r) 4px var(--r) var(--r)}
-.empathy{display:block;font-style:italic;color:var(--tc2);margin-bottom:11px;font-size:13.5px;line-height:1.6}
+.empathy{display:block;font-style:italic;color:var(--tc2);margin-bottom:11px;font-size:16px;line-height:1.55}
 .sbox{border-radius:10px;padding:10px 13px;margin:7px 0}
 .biobox{background:#EFF3F8;border:1px solid #C8D8E8}
 .montbox{background:var(--g6);border:1px solid var(--g4)}
 .slbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;display:block}
 .biobox .slbl{color:#4A6FA5}
 .montbox .slbl{color:var(--g2)}
-.sbox p{font-size:13px;line-height:1.68;color:var(--tx)}
+.sbox p{font-size:16px;line-height:1.6;color:var(--tx)}
 .albl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--g2);margin:11px 0 4px;display:block}
 ul.dos,ul.donts{list-style:none;margin:0}
-ul.dos li,ul.donts li{padding:3px 0 3px 21px;position:relative;font-size:13px;line-height:1.6}
+ul.dos li,ul.donts li{padding:3px 0 3px 21px;position:relative;font-size:16px;line-height:1.55}
 ul.dos li::before{content:"✓";position:absolute;left:0;color:var(--g3);font-weight:600}
 ul.donts li{color:#8A3A2A}
 ul.donts li::before{content:"✗";position:absolute;left:0;color:#C86050;font-weight:600}
 .srcnote{font-size:10px;color:var(--lx);margin-top:9px;padding-top:6px;border-top:1px solid var(--s2)}
 #chips{padding:6px 14px 8px;display:flex;flex-wrap:nowrap;gap:6px;border-top:1px solid var(--s2);background:var(--s1);flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
-.chip{font-size:11.5px;padding:5px 11px;border-radius:20px;border:1px solid var(--s3);background:var(--wh);color:var(--mx);cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;flex-shrink:0}
+.chip{font-size:13.5px;padding:7px 13px;border-radius:20px;border:1px solid var(--s3);background:var(--wh);color:var(--mx);cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;flex-shrink:0}
 .chip:hover{background:var(--g5);border-color:var(--g2);color:var(--g1)}
 #ibar{padding:9px 18px 13px;background:var(--s1);flex-shrink:0;transition:padding .2s ease}
 .iwrap{display:flex;gap:8px;align-items:flex-end;background:var(--wh);border:1px solid var(--s3);border-radius:var(--r);padding:7px 7px 7px 13px;transition:all .2s ease}
@@ -738,23 +736,9 @@ body.mobile-mode .hbtn{padding:5px 8px}
 <div id="app-body">
 <div id="view-chat" class="active">
   <div id="msgs">
-    <div class="welcome">
-      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:8px">
-        <svg width="44" height="54" viewBox="0 0 44 54" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:2px">
-          <path d="M22 50 L22 22" stroke="#4A6350" stroke-width="1.4" stroke-linecap="round"/>
-          <path d="M22 22 C22 12 14 10 12 16 C14.5 16 19 18.5 22 22Z" fill="#7A8D7B" stroke="#4A6350" stroke-width=".9" stroke-linejoin="round"/>
-          <path d="M22 30 C22 20 30 18 32 24 C29.5 24 25 26 22 30Z" fill="#B5C4B6" stroke="#4A6350" stroke-width=".9" stroke-linejoin="round"/>
-          <path d="M22 38 C22 30 15 28 13 33 C15.5 33 19.5 35 22 38Z" fill="#E8EDE8" stroke="#7A8D7B" stroke-width=".9" stroke-linejoin="round"/>
-          <ellipse cx="22" cy="51" rx="6" ry="2" fill="#C88A75" opacity=".25"/>
-        </svg>
-        <div>
-          <h2 style="font-family:'Lora',serif;font-size:16px;font-weight:400;color:var(--g1);margin-bottom:5px">Hallo. Schön, dass du da bist.</h2>
-          <p style="font-size:13px;color:var(--mx);line-height:1.65">Beschreib deine aktuelle Situation — ich antworte mit wissenschaftlichem Hintergrund und konkreten Montessori-Impulsen.</p>
-        </div>
-      </div>
-    </div>
+    <div class="cta-line" id="cta-line">Schildere deine Herausforderung.<br>Erhalte die Montessori-Antwort.</div>
   </div>
-  <div id="chips">
+  <div id="chips" style="display:none">
     <button class="chip" onclick="chip('Mein Kind will sich morgens nicht anziehen')">Anziehen</button>
     <button class="chip" onclick="chip('Mein Kind hat einen Wutanfall')">Wutanfall</button>
     <button class="chip" onclick="chip('Kind nimmt anderen das Spielzeug weg')">Spielzeug wegnehmen</button>
@@ -768,7 +752,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
   </div>
   <div id="ibar">
     <div class="iwrap">
-      <textarea id="inp" rows="1" placeholder="Situation beschreiben..."
+      <textarea id="inp" rows="1"
         onfocus="document.getElementById('ibar').classList.remove('subtle')"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();chatGo()}"
         oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';document.getElementById('sbtn').disabled=!this.value.trim()||chatBusy"></textarea>
@@ -970,29 +954,47 @@ body.mobile-mode .hbtn{padding:5px 8px}
   <div class="ph"><h2>Kinderprofil</h2><button class="xbtn" onclick="closeAllPanels()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="pb">
     <div id="pnote" class="pnote"></div>
-    <p style="font-size:12px;color:var(--lx);line-height:1.6;margin:0 0 14px">🔒 Zum Schutz der Privatsphäre werden keine sensiblen Daten gespeichert oder übertragen — alle Angaben bleiben ausschließlich auf eurem Gerät.</p>
+    <p style="font-size:12px;color:var(--lx);line-height:1.6;margin:0 0 14px">🔒 Zum Schutz der Privatsphäre werden keine sensiblen Daten gespeichert oder übertragen. Alle Angaben bleiben ausschließlich auf eurem Gerät.</p>
     <div class="fg">
       <label class="fl">Name</label>
-      <input type="text" id="p-name" placeholder="z. B. Lena" maxlength="30">
+      <input type="text" id="p-name" placeholder="z. B. Lena" maxlength="30" onblur="autoSaveProfile()">
       <div style="font-size:11.5px;color:var(--lx);margin-top:4px">Optional: nur den Anfangsbuchstaben verwenden (z. B. "L.")</div>
     </div>
     <div class="fg"><label class="fl">Alter</label><div class="ar">
-      <select id="p-years"><option value="">Jahre</option><option value="0">unter 1</option><option value="1">1 Jahr</option><option value="2">2 Jahre</option><option value="3">3 Jahre</option><option value="4">4 Jahre</option><option value="5">5 Jahre</option><option value="6">6 Jahre</option></select>
-      <select id="p-months"><option value="">Monate</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option></select>
+      <select id="p-years" onchange="autoSaveProfile()"><option value="">Kein Alter</option><option value="0">unter 1</option><option value="1">1 Jahr</option><option value="2">2 Jahre</option><option value="3">3 Jahre</option><option value="4">4 Jahre</option><option value="5">5 Jahre</option><option value="6">6 Jahre</option></select>
+      <select id="p-months" onchange="autoSaveProfile()"><option value="">Monate</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option></select>
     </div></div>
-    <div class="fg"><label class="fl">Geschlecht</label><select id="p-gender"><option value="">keine Angabe</option><option value="w">Mädchen</option><option value="m">Junge</option><option value="d">Divers</option></select></div>
-    <div class="fg"><label class="fl">Lebenssituation</label><div id="ctx-checks">
-      <div class="cbrow"><input type="checkbox" id="c1" value="besucht Kindergarten"><label for="c1">Geht in Kindergarten / Krippe</label></div>
-      <div class="cbrow"><input type="checkbox" id="c2" value="frisch eingewöhnt"><label for="c2">Frisch eingewöhnt (&lt;3 Monate)</label></div>
-      <div class="cbrow"><input type="checkbox" id="c3" value="hat Geschwister"><label for="c3">Hat Geschwister</label></div>
-      <div class="cbrow"><input type="checkbox" id="c4" value="neues Geschwisterkind"><label for="c4">Neues Geschwister (letzte 6 Mo.)</label></div>
-      <div class="cbrow"><input type="checkbox" id="c5" value="Umzug in letzter Zeit"><label for="c5">Umzug in letzter Zeit</label></div>
-      <div class="cbrow"><input type="checkbox" id="c6" value="Eltern getrennt"><label for="c6">Eltern getrennt</label></div>
-      <div class="cbrow"><input type="checkbox" id="c7" value="sehr sensitives Kind"><label for="c7">Sehr sensitives Kind</label></div>
-      <div class="cbrow"><input type="checkbox" id="c8" value="Sprachentwicklung später"><label for="c8">Sprachentwicklung etwas später</label></div>
+    <div class="fg"><label class="fl">Geschlecht</label><select id="p-gender" onchange="autoSaveProfile()"><option value="">keine Angabe</option><option value="w">Mädchen</option><option value="m">Junge</option><option value="d">Divers</option></select></div>
+    <div class="fg"><label class="fl">Geschwister</label><select id="p-siblings" onchange="autoSaveProfile()">
+      <option value="">keine Geschwister</option>
+      <option value="aelter">hat älteres Geschwisterkind</option>
+      <option value="juenger">hat jüngeres Geschwisterkind</option>
+      <option value="neu">neues Geschwisterkind (&lt;6 Monate)</option>
+    </select></div>
+    <div class="fg"><label class="fl">Betreuung</label><select id="p-care" onchange="autoSaveProfile()">
+      <option value="">zuhause</option>
+      <option value="kita_laenger">Kita/Krippe seit längerem</option>
+      <option value="kita_neu">Kita/Krippe, gerade erst gestartet</option>
+    </select></div>
+    <div class="fg"><label class="fl">Kommunikation</label><select id="p-communication" onchange="autoSaveProfile()">
+      <option value="">keine Angabe</option>
+      <option value="saetze">spricht in Sätzen</option>
+      <option value="woerter">spricht einzelne Wörter</option>
+      <option value="keine">spricht noch nicht</option>
+    </select></div>
+    <div class="fg"><label class="fl">Reaktion bei Grenzen</label><select id="p-reaction" onchange="autoSaveProfile()">
+      <option value="">keine Angabe</option>
+      <option value="rueckzug">zieht sich eher zurück</option>
+      <option value="wut">wird eher laut-wütend</option>
+      <option value="ignoriert">ignoriert komplett</option>
+    </select></div>
+    <div class="fg"><label class="fl">Aktuelle Veränderungen</label><div id="ctx-checks">
+      <div class="cbrow"><input type="checkbox" id="c1" value="Umzug in letzter Zeit" onchange="autoSaveProfile()"><label for="c1">Umzug in letzter Zeit</label></div>
+      <div class="cbrow"><input type="checkbox" id="c2" value="Eltern getrennt" onchange="autoSaveProfile()"><label for="c2">Eltern getrennt</label></div>
+      <div class="cbrow"><input type="checkbox" id="c3" value="Trauerfall oder Verlust" onchange="autoSaveProfile()"><label for="c3">Trauerfall oder Verlust</label></div>
     </div></div>
-    <div class="fg"><label class="fl">Notizen</label><textarea class="fta" id="p-notes" placeholder="Besonderheiten, Schlafverhalten..."></textarea></div>
-    <button class="sbtn" onclick="saveProfile()">Profil speichern</button>
+    <div class="fg"><label class="fl">Notizen</label><textarea class="fta" id="p-notes" placeholder="Sonstiges, das noch wichtig sein könnte..." onblur="autoSaveProfile()"></textarea></div>
+    <button class="sbtn" onclick="closeAllPanels()">Fertig</button>
     <button class="clbtn" onclick="clearProfile()">Profil löschen</button>
   </div>
 </div>
@@ -4252,22 +4254,43 @@ function applyProfile() {
   if (profile.years !== undefined) document.getElementById('p-years').value = profile.years;
   if (profile.months !== undefined) document.getElementById('p-months').value = profile.months;
   if (profile.gender) document.getElementById('p-gender').value = profile.gender;
+  if (profile.siblings) document.getElementById('p-siblings').value = profile.siblings;
+  if (profile.care) document.getElementById('p-care').value = profile.care;
+  if (profile.communication) document.getElementById('p-communication').value = profile.communication;
+  if (profile.reaction) document.getElementById('p-reaction').value = profile.reaction;
   if (profile.notes) document.getElementById('p-notes').value = profile.notes;
   document.querySelectorAll('#ctx-checks input[type=checkbox]').forEach(function(cb) { cb.checked = (profile.context || []).indexOf(cb.value) !== -1; });
 }
-function saveProfile() {
+function autoSaveProfile() {
+  var yearsVal = document.getElementById('p-years').value;
+  var hadAgeBefore = profile.years !== undefined && profile.years !== '';
   var ctx = [];
   document.querySelectorAll('#ctx-checks input[type=checkbox]').forEach(function(cb) { if (cb.checked) ctx.push(cb.value); });
-  profile = { name: document.getElementById('p-name').value.trim(), years: document.getElementById('p-years').value, months: document.getElementById('p-months').value, gender: document.getElementById('p-gender').value, notes: document.getElementById('p-notes').value.trim(), context: ctx };
+  profile = {
+    name: document.getElementById('p-name').value.trim(),
+    years: yearsVal,
+    months: document.getElementById('p-months').value,
+    gender: document.getElementById('p-gender').value,
+    siblings: document.getElementById('p-siblings').value,
+    care: document.getElementById('p-care').value,
+    communication: document.getElementById('p-communication').value,
+    reaction: document.getElementById('p-reaction').value,
+    notes: document.getElementById('p-notes').value.trim(),
+    context: ctx
+  };
   localStorage.setItem('mont_profile', JSON.stringify(profile));
+  if (yearsVal === '' && hadAgeBefore) {
+    window.montAgePopupCount = 0;
+  }
   chatHist = [];
-  updatePill(); updatePNote(); closeAllPanels();
-  addSysMsg('Profil gespeichert — alle neuen Antworten berücksichtigen jetzt die aktuellen Angaben zu ' + (profile.name || 'eurem Kind') + '.');
+  updatePill(); updatePNote();
 }
 function clearProfile() {
   profile = {}; localStorage.removeItem('mont_profile');
-  ['p-name','p-years','p-months','p-gender','p-notes'].forEach(function(id) { document.getElementById(id).value = ''; });
+  ['p-name','p-years','p-months','p-gender','p-siblings','p-care','p-communication','p-reaction','p-notes'].forEach(function(id) { document.getElementById(id).value = ''; });
   document.querySelectorAll('#ctx-checks input').forEach(function(cb) { cb.checked = false; });
+  window.montAgePopupCount = 0;
+  chatHist = [];
   updatePill(); updatePNote(); closeAllPanels();
 }
 function getAge() {
@@ -4288,7 +4311,26 @@ function updatePNote() {
 }
 function profileCtx() {
   if (!profile || !Object.keys(profile).length) return '';
-  var s = 'KINDERPROFIL: '; if (profile.name) s += 'Name: ' + profile.name + '. '; if (getAge()) s += 'Alter: ' + getAge() + '. '; if (profile.gender === 'w') s += 'Maedchen. '; if (profile.gender === 'm') s += 'Junge. '; if (profile.context && profile.context.length) s += 'Lebenssituation: ' + profile.context.join(', ') + '. '; if (profile.notes) s += 'Notizen: ' + profile.notes + '. '; s += 'Bitte beziehe dich konkret auf ' + (profile.name || 'das Kind') + '.'; return s;
+  var s = 'KINDERPROFIL: ';
+  if (profile.name) s += 'Name: ' + profile.name + '. ';
+  if (getAge()) s += 'Alter: ' + getAge() + '. ';
+  if (profile.gender === 'w') s += 'Maedchen. ';
+  if (profile.gender === 'm') s += 'Junge. ';
+  if (profile.siblings === 'aelter') s += 'Hat ein aelteres Geschwisterkind. ';
+  if (profile.siblings === 'juenger') s += 'Hat ein juengeres Geschwisterkind. ';
+  if (profile.siblings === 'neu') s += 'Hat seit kurzem (unter 6 Monaten) ein neues Geschwisterkind, moegliche Eifersucht/Regression beachten. ';
+  if (profile.care === 'kita_laenger') s += 'Geht seit laengerem in Kita/Krippe. ';
+  if (profile.care === 'kita_neu') s += 'Ist gerade erst in Kita/Krippe gestartet, moegliche Eingewoehnungs-Regression beachten. ';
+  if (profile.communication === 'saetze') s += 'Kommunikation: spricht bereits in Saetzen, verbale Erklaerungen sind gut nutzbar. ';
+  if (profile.communication === 'woerter') s += 'Kommunikation: spricht erst einzelne Woerter, einfache kurze Sprache und Gesten nutzen statt langer Erklaerungen. ';
+  if (profile.communication === 'keine') s += 'Kommunikation: spricht noch nicht, KEINE verbalen Erklaerungen als Hauptstrategie vorschlagen, stattdessen Gesten, Vormachen, Koerpersprache. ';
+  if (profile.reaction === 'rueckzug') s += 'Reagiert bei Grenzen eher mit Rueckzug, braucht Naehe und Geduld statt Konfrontation. ';
+  if (profile.reaction === 'wut') s += 'Reagiert bei Grenzen eher mit lautem Wutausbruch, braucht Ko-Regulation und Raum. ';
+  if (profile.reaction === 'ignoriert') s += 'Ignoriert Grenzen oft komplett, braucht klare, wiederholte, ruhige Ansagen statt einmaliger Erklaerung. ';
+  if (profile.context && profile.context.length) s += 'Aktuelle Veraenderungen: ' + profile.context.join(', ') + '. ';
+  if (profile.notes) s += 'Notizen: ' + profile.notes + '. ';
+  s += 'Bitte beziehe dich konkret auf ' + (profile.name || 'das Kind') + '.';
+  return s;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -5457,6 +5499,26 @@ function checkLoginPopupOnLoad() {
   }
 }
 checkLoginPopupOnLoad();
+
+var phExamples = ['Mein Kind isst kein Gemüse','Mein Kind haut andere','Mein Kind will nicht schlafen gehen','Mein Kind macht keine Hausaufgaben','Mein Kind hört nicht auf mich'];
+var phIdx = 0, phChar = 0, phTimer = null;
+function phTick() {
+  var inp = document.getElementById('inp');
+  if (!inp || inp.value) { phTimer = setTimeout(phTick, 600); return; }
+  var text = phExamples[phIdx];
+  if (phChar <= text.length) {
+    inp.setAttribute('placeholder', text.slice(0, phChar));
+    phChar++;
+    phTimer = setTimeout(phTick, 45);
+  } else {
+    phTimer = setTimeout(function() {
+      phIdx = (phIdx + 1) % phExamples.length;
+      phChar = 0;
+      phTick();
+    }, 1900);
+  }
+}
+phTick();
 
 showPwaBanner();
 
