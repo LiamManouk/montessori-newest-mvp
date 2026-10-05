@@ -4279,7 +4279,8 @@ function autoSaveProfile() {
     communication: document.getElementById('p-communication').value,
     reaction: document.getElementById('p-reaction').value,
     notes: document.getElementById('p-notes').value.trim(),
-    context: ctx
+    context: ctx,
+    observations: profile.observations || []
   };
   localStorage.setItem('mont_profile', JSON.stringify(profile));
   if (yearsVal === '' && hadAgeBefore) {
@@ -4312,6 +4313,34 @@ function updatePNote() {
   if (has) { var p = []; if (profile.name) p.push(profile.name); if (getAge()) p.push(getAge()); if (profile.context && profile.context.length) p.push(profile.context.length + ' Kontextangaben'); el.innerHTML = '✓ Aktives Profil: ' + p.join(' · '); el.classList.add('show'); }
   else el.classList.remove('show');
 }
+function currentLang() { return localStorage.getItem('mont_lang') || 'de'; }
+function contextAddendum() {
+  if (!window.pendingFollowup) return '';
+  if (currentLang() === 'en') {
+    return '\n\nCONTEXT: In the previous answer, this follow-up question was asked: "' + window.pendingFollowup + '". First check: does the current user message answer EXACTLY this follow-up question (providing context/observation), or does it describe a NEW or different problem?\nIf it answers the follow-up question: respond EXCLUSIVELY with this JSON: {"is_context_answer":true,"observation":"string","ack":"string"}. observation: EXACTLY one short sentence, MAXIMUM 15 words, compressing the observation, will be saved and used as context later. ack: EXACTLY one warm, short sentence as acknowledgment, MAXIMUM 12 words, no new action recommendation.\nIf it describes a new or different problem: ignore this context note entirely and respond normally with the full JSON format as described above (empathy, montessori, dos, donts, sources, topic, bio, optional followup).';
+  }
+  return '\n\nKONTEXT: Bei der letzten Antwort wurde folgende Rückfrage gestellt: "' + window.pendingFollowup + '". Prüfe zuerst: Antwortet die aktuelle Nutzernachricht auf GENAU diese Rückfrage (liefert Kontext/Beobachtung), oder beschreibt sie ein NEUES oder anderes Problem?\nFalls es eine Antwort auf die Rückfrage ist: Antworte AUSSCHLIESSLICH mit diesem JSON: {"is_context_answer":true,"observation":"string","ack":"string"}. observation: GENAU EIN kurzer Satz, MAXIMAL 15 Wörter, der die Beobachtung verdichtet zusammenfasst, wird gespeichert und später als Kontext genutzt. ack: GENAU EIN warmer, kurzer Satz als Rückmeldung, MAXIMAL 12 Wörter, keine neue Handlungsempfehlung.\nFalls es ein neues oder anderes Problem beschreibt: Ignoriere diesen Kontext-Hinweis komplett und antworte ganz normal mit dem vollen JSON-Format wie oben beschrieben (empathy, montessori, dos, donts, sources, topic, bio, optional followup).';
+}
+function saveObservation(obs, question) {
+  if (!obs) return;
+  if (!profile.observations) profile.observations = [];
+  profile.observations.push(obs);
+  if (profile.observations.length > 12) profile.observations = profile.observations.slice(-12);
+  localStorage.setItem('mont_profile', JSON.stringify(profile));
+  try {
+    fetch('https://montessori-proxy.liam-broemer.workers.dev/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        device_id: getDeviceId(),
+        frage: question || '',
+        antwort: obs,
+        bewertung: 'kontext_beobachtung',
+        kommentar: ''
+      })
+    }).catch(function(){});
+  } catch(e) {}
+}
 function profileCtx() {
   if (!profile || !Object.keys(profile).length) return '';
   var s = 'KINDERPROFIL: ';
@@ -4332,6 +4361,7 @@ function profileCtx() {
   if (profile.reaction === 'ignoriert') s += 'Ignoriert Grenzen oft komplett, braucht klare, wiederholte, ruhige Ansagen statt einmaliger Erklärung. ';
   if (profile.context && profile.context.length) s += 'Aktuelle Veränderungen: ' + profile.context.join(', ') + '. ';
   if (profile.notes) s += 'Notizen: ' + profile.notes + '. ';
+  if (profile.observations && profile.observations.length) s += 'Bisherige Beobachtungen der Eltern: ' + profile.observations.join(' | ') + '. ';
   s += 'Bitte beziehe dich konkret auf ' + (profile.name || 'das Kind') + '.';
   return s;
 }
@@ -4923,7 +4953,7 @@ async function streamChatOnce(maxTok, d) {
       model: 'claude-sonnet-4-6',
       max_tokens: maxTok,
       stream: true,
-      system: [{type:'text', text:SYS, cache_control:{type:'ephemeral'}}],
+      system: [{type:'text', text:(currentLang()==='en' ? SYS_EN : SYS) + contextAddendum(), cache_control:{type:'ephemeral'}}],
       messages: chatHist.slice(-4)
     })
   });
@@ -4986,7 +5016,8 @@ async function chatGo() {
   var ctx = profileCtx();
   var kgCtx = buildKgCtx();
   var fullCtx = [kgCtx, ctx].filter(Boolean).join('\n');
-  chatHist.push({role:'user', content: fullCtx ? fullCtx + '\n\nFrage: ' + text : text});
+  var langTag = currentLang() === 'en' ? 'LANGUAGE: Respond in English only, all fields in English.\n\n' : '';
+  chatHist.push({role:'user', content: langTag + (fullCtx ? fullCtx + '\n\nFrage: ' + text : text)});
   if (chatHist.length > 10) chatHist = chatHist.slice(chatHist.length - 10);
   showTyping();
   try {
@@ -5038,8 +5069,12 @@ async function chatGo() {
     lastAnswer = raw;
 
     try {
-      var obj = parseJSON(raw);
-      renderBotIncremental(obj, d);
+      if (obj.is_context_answer) {
+        d.querySelector('.bub').innerHTML = '<span style="font-style:italic;color:var(--g2)">' + esc(obj.ack || (currentLang()==='en' ? 'Thank you, noted.' : 'Danke, notiert.')) + '</span>';
+        saveObservation(obj.observation, window.pendingFollowup);
+        window.pendingFollowup = null;
+      } else {
+        renderBotIncremental(obj, d);
       if (!obj.clarify) {
         window.montAnswerCount = (window.montAnswerCount || 0) + 1;
         localStorage.setItem('mont_total_answers', String(parseInt(localStorage.getItem('mont_total_answers') || '0') + 1));
@@ -5084,6 +5119,7 @@ async function chatGo() {
         window.pendingFollowup = obj.followup;
       } else {
         window.pendingFollowup = null;
+      }
       }
     } catch(e2) {
       d.querySelector('.bub').textContent = raw;
