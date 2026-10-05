@@ -5069,6 +5069,7 @@ async function chatGo() {
     lastAnswer = raw;
 
     try {
+      var obj = parseJSON(raw);
       if (obj.is_context_answer) {
         d.querySelector('.bub').innerHTML = '<span style="font-style:italic;color:var(--g2)">' + esc(obj.ack || (currentLang()==='en' ? 'Thank you, noted.' : 'Danke, notiert.')) + '</span>';
         saveObservation(obj.observation, window.pendingFollowup);
