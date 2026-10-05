@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="Begleiter">
 <meta name="theme-color" content="#2C4A35">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -49,7 +49,7 @@ body{display:flex;flex-direction:column;overflow:hidden;height:100%}
 /* header */
 #hdr{background:var(--g1);border-bottom:none;padding:10px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;z-index:10;overflow:hidden}
 .hlogo{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-#hdr h1{font-family:'Lora',serif;font-size:16px;font-weight:500;color:var(--wh);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hdr h1{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--wh);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #hdr-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .hbadge{font-size:10px;font-weight:500;color:var(--g4);background:rgba(255,255,255,.15);padding:3px 9px;border-radius:20px}
 .hbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:7px 10px;font-size:12px;font-family:'Inter',sans-serif;color:rgba(255,255,255,.9);cursor:pointer;display:flex;align-items:center;gap:0;white-space:nowrap;flex-shrink:0}
@@ -73,7 +73,7 @@ body{display:flex;flex-direction:column;overflow:hidden;height:100%}
 .panel{position:fixed;top:0;right:0;bottom:0;width:min(360px,100vw);background:var(--wh);border-left:1px solid var(--s2);z-index:50;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s ease}
 .panel.open{transform:translateX(0)}
 .ph{padding:13px 18px;border-bottom:1px solid var(--s2);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:var(--g6)}
-.ph h2{font-family:'Lora',serif;font-size:16px;font-weight:400;color:var(--g1);letter-spacing:.01em}
+.ph h2{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--g1);letter-spacing:.01em}
 .xbtn{background:none;border:none;cursor:pointer;color:var(--mx);padding:4px;border-radius:6px;display:flex}
 .xbtn:hover{background:var(--s2)}
 .xbtn svg{width:18px;height:18px}
@@ -101,7 +101,7 @@ select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%
 .pnote.show{display:block}
 /* chat */
 #msgs{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;min-height:0;overflow-anchor:none}
-.cta-line{text-align:center;font-family:'Lora',serif;font-size:17px;font-weight:400;color:var(--g1);padding:38px 20px;line-height:1.5}
+.cta-line{text-align:center;font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--g1);padding:38px 20px;line-height:1.5}
 .msg{display:flex;gap:9px;max-width:92%}
 .msg.user{align-self:flex-end;flex-direction:row-reverse}
 .av{width:28px;height:28px;border-radius:50%;background:var(--g5);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px}
@@ -217,7 +217,7 @@ ul.donts li::before{content:"✗";position:absolute;left:0;color:#C86050;font-we
 .badge-i{background:#FBF4E8;color:#8A5E35}
 .badge-pr{background:var(--g5);color:var(--g1)}
 .badge-s{background:var(--tc5);color:var(--tc1)}
-.step-title{font-family:'Lora',serif;font-size:18px;font-weight:400;color:var(--g1);margin-bottom:14px;line-height:1.4}
+.step-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--g1);margin-bottom:14px;line-height:1.4}
 .sbody{font-size:13.5px;line-height:1.75;color:var(--tx)}
 .sbody p{margin-bottom:10px}
 .sbody p:last-child{margin-bottom:0}
@@ -294,7 +294,7 @@ ul.donts li::before{content:"✗";position:absolute;left:0;color:#C86050;font-we
 #onboarding.done{display:none}
 .ob-header{padding:28px 24px 0;display:flex;align-items:center;gap:10px}
 .ob-logo{width:40px;height:40px;border-radius:50%;background:var(--g5);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.ob-header h1{font-family:'Lora',serif;font-size:20px;font-weight:400;color:var(--g1)}
+.ob-header h1{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--g1)}
 .ob-header p{font-size:12px;color:var(--mx);margin-top:2px}
 /* step dots */
 .ob-dots{display:flex;justify-content:center;gap:7px;padding:20px 0 0}
@@ -307,7 +307,7 @@ ul.donts li::before{content:"✗";position:absolute;left:0;color:#C86050;font-we
 .ob-slide.active{display:flex}
 @keyframes obfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 /* slide 1: device choice */
-.ob-s1-title{font-family:'Lora',serif;font-size:22px;font-weight:400;color:var(--g1);margin-bottom:8px;line-height:1.35}
+.ob-s1-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:400;color:var(--g1);margin-bottom:8px;line-height:1.35}
 .ob-s1-sub{font-size:13px;color:var(--mx);line-height:1.65;margin-bottom:24px}
 .device-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
 .device-card{background:var(--wh);border:2px solid var(--s2);border-radius:var(--r);padding:20px 16px;cursor:pointer;text-align:center;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:10px}
@@ -318,7 +318,7 @@ ul.donts li::before{content:"✗";position:absolute;left:0;color:#C86050;font-we
 .device-sub{font-size:12px;color:var(--mx);line-height:1.5}
 /* slide 2-4: feature cards */
 .ob-feature-badge{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;padding:3px 10px;border-radius:20px;margin-bottom:14px;display:inline-block}
-.ob-feature-title{font-family:'Lora',serif;font-size:20px;font-weight:400;color:var(--g1);margin-bottom:10px;line-height:1.4}
+.ob-feature-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--g1);margin-bottom:10px;line-height:1.4}
 .ob-feature-desc{font-size:13.5px;color:var(--mx);line-height:1.72;margin-bottom:18px;flex:1}
 .ob-feature-example{background:var(--wh);border:1px solid var(--s2);border-radius:12px;padding:13px 15px;margin-bottom:18px}
 .ob-ex-lbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--lx);margin-bottom:8px}
@@ -359,7 +359,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
 .kg-mode-pane{display:none}
 .kg-mode-pane.active{display:block}
 .kg-code-display{background:var(--g6);border:2px solid var(--g4);border-radius:12px;padding:16px;text-align:center;margin-bottom:16px}
-.kg-code-num{font-family:'Lora',serif;font-size:32px;font-weight:400;color:var(--g1);letter-spacing:6px;margin-bottom:4px}
+.kg-code-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;color:var(--g1);letter-spacing:6px;margin-bottom:4px}
 .kg-code-label{font-size:11px;color:var(--mx)}
 .kg-active-badge{background:var(--g5);border:1px solid var(--g4);border-radius:10px;padding:10px 13px;margin-bottom:14px;display:none}
 .kg-active-badge.show{display:block}
@@ -418,7 +418,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
 .fc-front-tag{padding:14px 18px 0;display:flex;align-items:center;justify-content:space-between}
 .fc-tag-badge{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--g2);background:var(--g5);padding:3px 9px;border-radius:20px}
 .fc-tag-num{font-size:11px;color:var(--lx)}
-.fc-front-title{font-family:'Lora',serif;font-size:17px;font-weight:400;color:var(--g1);padding:10px 18px 0;line-height:1.35}
+.fc-front-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--g1);padding:10px 18px 0;line-height:1.35}
 .fc-front-sit{padding:10px 18px;font-size:13px;color:var(--tx);line-height:1.72;flex:1;border-bottom:1px solid var(--s2)}
 .fc-front-input{padding:13px 18px 16px}
 .fc-input-q{font-size:12px;font-weight:500;color:var(--mx);margin-bottom:7px}
@@ -447,7 +447,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
 .fc-tafel::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 200 80'%3E%3Cpath d='M4 40 L4 20' stroke='%234A6350' stroke-width='1' stroke-linecap='round' opacity='.5'/%3E%3Cpath d='M4 32 C1 27 0 23 2 21 C4 23 4 28 4 32Z' fill='%233d6040' opacity='.4'/%3E%3Cpath d='M4 25 C7 21 9 19 7 17 C5 19 4 23 4 25Z' fill='%234a6b4c' opacity='.35'/%3E%3Cpath d='M196 40 L196 20' stroke='%234A6350' stroke-width='1' stroke-linecap='round' opacity='.5'/%3E%3Cpath d='M196 32 C199 27 200 23 198 21 C196 23 196 28 196 32Z' fill='%233d6040' opacity='.4'/%3E%3Cpath d='M196 25 C193 21 191 19 193 17 C195 19 196 23 196 25Z' fill='%234a6b4c' opacity='.35'/%3E%3C/svg%3E") no-repeat center/cover;pointer-events:none}
 .fc-tafel-lbl{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.75);margin-bottom:7px;display:flex;align-items:center;gap:5px}
 .fc-tafel-lbl::before{content:'';display:inline-block;width:10px;height:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M6 11 L6 5' stroke='rgba(255,255,255,.4)' stroke-width='1' stroke-linecap='round'/%3E%3Cpath d='M6 5 C6 2 3 2 2.5 4 C3.5 4 5 4.5 6 5Z' fill='rgba(255,255,255,.3)'/%3E%3Cpath d='M6 7 C6 4 9 3.5 9.5 5.5 C8.5 5.5 7 6 6 7Z' fill='rgba(255,255,255,.2)'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat;flex-shrink:0}
-.fc-tafel-txt{font-family:'Lora',serif;font-size:14px;font-style:italic;color:rgba(255,255,255,.9);line-height:1.68;letter-spacing:.01em}
+.fc-tafel-txt{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:rgba(255,255,255,.9);line-height:1.68;letter-spacing:.01em}
 .fc-tafel-src{font-size:10px;color:rgba(255,255,255,.7);margin-top:6px;text-align:right}
 .fc-better-way{background:rgba(44,62,45,.08);border:1px solid rgba(44,62,45,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px}
 .fc-better-way-lbl{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:#4A6350;margin-bottom:10px;display:block}
@@ -472,13 +472,13 @@ body.mobile-mode .hbtn{padding:5px 8px}
 #view-prog.active{display:flex!important;flex-direction:column;flex:1;min-height:0}
 #prog-scroll{flex:1;overflow-y:auto;padding:20px 20px 28px}
 
-.pg-title{font-family:'Lora',serif;font-size:19px;font-weight:400;color:var(--g1);margin-bottom:4px}
+.pg-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--g1);margin-bottom:4px}
 .pg-sub{font-size:13px;color:var(--mx);line-height:1.6;margin-bottom:24px}
 
 /* Streak */
 .pg-streak{background:var(--wh);border:1px solid var(--s2);border-radius:16px;padding:18px 20px;margin-bottom:14px;display:flex;align-items:center;gap:16px}
 .pg-streak-icon{font-size:28px;line-height:1;flex-shrink:0}
-.pg-streak-num{font-family:'Lora',serif;font-size:28px;font-weight:400;color:var(--tx);line-height:1}
+.pg-streak-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--tx);line-height:1}
 .pg-streak-label{font-size:12px;color:var(--mx);margin-top:2px}
 .pg-streak-bar{flex:1;display:flex;gap:4px;justify-content:flex-end}
 .pg-day{width:22px;height:22px;border-radius:6px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--lx)}
@@ -492,7 +492,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
 /* Stat row */
 .pg-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
 .pg-stat{background:var(--wh);border:1px solid var(--s2);border-radius:14px;padding:15px 16px}
-.pg-stat-num{font-family:'Lora',serif;font-size:26px;font-weight:400;color:var(--tx);line-height:1;margin-bottom:3px}
+.pg-stat-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--tx);line-height:1;margin-bottom:3px}
 .pg-stat-label{font-size:12px;color:var(--mx)}
 
 /* Progress bars */
@@ -562,7 +562,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
 #pwa-banner.show{transform:translateY(0)}
 .pwa-close-x{position:absolute;top:10px;right:12px;background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;line-height:1;cursor:pointer;padding:6px;width:32px;height:32px}
 .pwa-close-x:hover{color:#fff}
-.pwa-banner-title{font-family:'Lora',serif;font-size:15px;font-weight:400;margin-bottom:4px}
+.pwa-banner-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:400;margin-bottom:4px}
 .pwa-banner-sub{font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.55;margin-bottom:14px}
 .pwa-steps{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
 .pwa-step{display:flex;align-items:center;gap:10px;font-size:12.5px;color:rgba(255,255,255,.9)}
@@ -811,7 +811,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
     <!-- Philosophie Tab -->
     <div id="learn-philo" class="active">
       <div id="learn-scroll-philo" style="flex:1;overflow-y:auto;padding:16px 18px">
-        <p style="font-family:'Lora',serif;font-size:17px;font-weight:500;color:var(--tx);margin-bottom:6px">Montessori lernen</p>
+        <p style="font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--tx);margin-bottom:6px">Montessori lernen</p>
         <p style="font-size:13px;color:var(--mx);line-height:1.6;margin-bottom:14px">Was Montessori wirklich meinte — abstrakte Prinzipien direkt mit Alltag verknüpft.</p>
         <div class="learn-search-wrap">
           <input type="text" id="learn-search" placeholder="Prinzip oder Thema suchen, z. B. Konzentration, Grenzen, Ordnung..." oninput="onLearnSearch(this.value)">
@@ -825,7 +825,7 @@ body.mobile-mode .hbtn{padding:5px 8px}
     <!-- Alltags-Übungen Tab -->
     <div id="learn-alltag">
       <div id="learn-scroll-alltag" style="flex:1;overflow-y:auto;padding:16px 18px">
-        <p style="font-family:'Lora',serif;font-size:17px;font-weight:500;color:var(--tx);margin-bottom:6px">Alltags-Übungen</p>
+        <p style="font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--tx);margin-bottom:6px">Alltags-Übungen</p>
         <p style="font-size:13px;color:var(--mx);line-height:1.6;margin-bottom:18px">Echte Situationen — du beschreibst deine Reaktion, Claude gibt persönliches Feedback auf Basis der Montessori-Wissensbasis.</p>
         <div id="alltag-cards">
           <div class="fc-progress-bar-wrap"><div class="fc-progress-bar" id="fc-prog-bar" style="width:0%"></div></div>
