@@ -4710,18 +4710,6 @@ function addSysMsg(text) {
   d.innerHTML = '<div class="av"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 20 L12 10" stroke="#4A6350" stroke-width="1.5" stroke-linecap="round"/><path d="M12 10 C12 5 7 4 6 7 C8 7 10 8.5 12 10Z" fill="#7A8D7B"/><path d="M12 15 C12 10 17 8 18 11 C16 11 14 13 12 15Z" fill="#B5C4B6"/></svg></div><div class="bub" style="font-size:13px;color:var(--g2);font-style:italic">' + text + '</div>';
   m.appendChild(d); scrollChat();
 }
-function showProfileHint() {
-  var m = document.getElementById('msgs'), d = document.createElement('div');
-  d.className = 'msg bot';
-  d.innerHTML = '<div class="av"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 20 L12 10" stroke="#4A6350" stroke-width="1.5" stroke-linecap="round"/><path d="M12 10 C12 5 7 4 6 7 C8 7 10 8.5 12 10Z" fill="#7A8D7B"/><path d="M12 15 C12 10 17 8 18 11 C16 11 14 13 12 15Z" fill="#B5C4B6"/></svg></div>'
-    + '<div class="bub" style="background:var(--g6);border:1px solid var(--g4)">'
-    + '<div style="font-size:13px;color:var(--g1);line-height:1.6"><strong>Tipp:</strong> Möchtest du ein Kinderprofil anlegen? Dann antwortet der Begleiter genauer. Keine sensiblen Daten — alles bleibt lokal auf deinem Gerät gespeichert.</div>'
-    + '<div style="margin-top:10px;display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--lx)">'
-    + '<span>Button oben rechts:</span>'
-    + '<span class="hbtn" style="pointer-events:none;display:inline-flex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Kind</span></span>'
-    + '</div></div>';
-  m.appendChild(d); scrollChat();
-}
 function appendFollowupBubble(text) {
   var m = document.getElementById('msgs'), d = document.createElement('div');
   d.className = 'msg bot';
@@ -5103,16 +5091,6 @@ async function chatGo() {
 
       if (!obj.clarify && !localStorage.getItem('mont_first_chat_done')) {
         localStorage.setItem('mont_first_chat_done', '1');
-      }
-
-      if (!obj.clarify) {
-        var answerCount = parseInt(localStorage.getItem('mont_answer_count') || '0') + 1;
-        localStorage.setItem('mont_answer_count', String(answerCount));
-        var hasProfile = profile && (profile.name || (profile.years !== undefined && profile.years !== ''));
-        if (answerCount === 3 && !hasProfile && !localStorage.getItem('mont_profile_hint_shown')) {
-          localStorage.setItem('mont_profile_hint_shown', '1');
-          setTimeout(showProfileHint, 1200);
-        }
       }
 
       if (!obj.clarify && obj.followup) {
